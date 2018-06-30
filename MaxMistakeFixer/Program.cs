@@ -499,10 +499,18 @@ namespace MaxMistakeFixer
         {
             StreamWriter script_writer = new StreamWriter(@".\FixMaxMistake.sql");
             script_writer.WriteLine("BEGIN TRANSACTION FixMaxMistake;");
+
+
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_people] ON [dbo].[PEOPLE];");
+            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_people] ON [dbo].[PEOPLE];");
+            script_writer.WriteLine("GO");
+
             script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_studentfinancial] ON [dbo].[STUDENTFINANCIAL];");
             script_writer.WriteLine("GO");
             script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_studentfinancial] ON [dbo].[STUDENTFINANCIAL];");
             script_writer.WriteLine("GO");
+
             script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiStudent] ON [dbo].[STUDENT];");
             script_writer.WriteLine("GO");
             script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuStudent] ON [dbo].[STUDENT];");
@@ -539,6 +547,8 @@ namespace MaxMistakeFixer
             script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_academic] ON [dbo].[ACADEMIC];");
             script_writer.WriteLine("GO");
             script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_academic] ON [dbo].[ACADEMIC];");
+            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_acadkey_change] ON [dbo].[ACADEMIC];");
             script_writer.WriteLine("GO");
 
             script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_transcriptdetail] ON [dbo].[TRANSCRIPTDETAIL];");
@@ -801,11 +811,18 @@ namespace MaxMistakeFixer
                 //TRANSCRIPTDETAIL tirgger=delete EXEC sp_dact_TRANSCRIPTDETAIL does nothing
                 //TRANSCRIPTDETAIL ok declaring leafnode
 
+                script_writer.WriteLine("SET IDENTITY_INSERT[Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL] ON");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL]", people_code_id);
+                script_writer.WriteLine("SET IDENTITY_INSERT[Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL] OFF");
+
+
+
 
                 //TRANSEDUCATION got data but no triggers therefore leafnode
 
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[TRANSEDUCATION] ON");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSEDUCATION]", people_code_id);
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[TRANSEDUCATION] OFF");
 
                 //TRANSCRIPTMARKETING trigger=delete 
                 //TRANSCRIPTMARKETING trigger=delete sp_dact_TRANSCRIPTMARKETING code does nothing
@@ -973,12 +990,19 @@ namespace MaxMistakeFixer
                 if (people_code_id.Equals("P000074179"))
                     DoSpecialChargeCreditDistQuery(ref script_writer, ref conn);
 
+
+
+
                 script_writer.WriteLine("-- table PeopleOrgBalance is a leafnode because there is no triggers for it");
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[PEOPLEORGBALANCE] ON");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PEOPLEORGBALANCE]", people_code_id, "PEOPLEORGBALANCE.PEOPLE_ORG_CODE_ID");
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[PEOPLEORGBALANCE] OFF");
+
+
+
 
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[CHARGECREDIT]", people_code_id, "CHARGECREDIT.PEOPLE_ORG_CODE_ID");
-
 
 
 
@@ -1010,9 +1034,9 @@ namespace MaxMistakeFixer
                 script_writer.WriteLine("-- table=ACTIONSCHEDULE trigger=DELETE EXEC sp_dact_ACTIONSCHEDULE does no code see code");
                 script_writer.WriteLine("-- table=ACTIONSCHEDULE declared to be leafnode");
 
-
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[ACTIONSCHEDULE] ON");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ACTIONSCHEDULE]", people_code_id, "ACTIONSCHEDULE.PEOPLE_ORG_CODE_ID");
-
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[ACTIONSCHEDULE] OFF");
 
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[NOTES]", people_code_id, "NOTES.PEOPLE_ORG_CODE_ID");
@@ -1112,7 +1136,9 @@ namespace MaxMistakeFixer
 
 
                 script_writer.WriteLine("-- table=ADDRESSSCHEDULE ..... we found data declared to be leafnode because it has no delete trigger");
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[ADDRESSSCHEDULE] ON");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ADDRESSSCHEDULE]", people_code_id, "ADDRESSSCHEDULE.PEOPLE_ORG_CODE_ID");
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[ADDRESSSCHEDULE] OFF");
 
 
                 script_writer.WriteLine("-- table=ADDRESSHIERARCHYUNIQUE ..... we found data declared to be leafnode because it has no delete trigger");
@@ -1175,16 +1201,10 @@ namespace MaxMistakeFixer
 
 
 
-
-
-
                 script_writer.WriteLine("-- table=PFINTEGRATION ..... we found data declared to be leafnode because it has no delete trigger");
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[PFINTEGRATION] ON");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PFINTEGRATION]", people_code_id);
-
-
-
-
-
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[PFINTEGRATION] OFF");
 
 
 
@@ -1233,8 +1253,9 @@ namespace MaxMistakeFixer
 
 
                 script_writer.WriteLine("-- table=StudentAssess ..... we found data declared to be leafnode because it has no delete trigger");
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[StudentAssess] ON");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[StudentAssess]", people_code_id);
-
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[StudentAssess] OFF");
 
 
 
