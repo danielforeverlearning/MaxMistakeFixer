@@ -278,7 +278,228 @@ namespace MaxMistakeFixer
         }
 
 
+        static int DoSpecialQuery_By_PEOPLE_ID(ref StreamWriter script_writer, ref SqlConnection conn, string table_name, string people_code_id, string mandatorycolumncheck)
+        {
+            string people_id = people_code_id.Replace("P", "");
+            string querystr = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", table_name, mandatorycolumncheck, people_id);
 
+            script_writer.WriteLine("-- " + querystr);
+
+            SqlCommand command = new SqlCommand(querystr, conn);
+            SqlDataReader dr = command.ExecuteReader();
+
+            int resultcount = 0;
+            while (dr.Read())
+            {
+                resultcount++;
+
+                string column_names = "(";
+                string column_values = "(";
+                string temp;
+
+                for (int ii = 0; ii < dr.FieldCount; ii++)
+                {
+                    if (ii == (dr.FieldCount - 1))
+                        column_names += string.Format("[{0}])", dr.GetName(ii));
+                    else
+                        column_names += string.Format("[{0}],", dr.GetName(ii));
+
+
+                    string myname = dr.GetName(ii);
+
+                    Type mytype = dr.GetFieldType(ii);
+                    if (mytype == typeof(System.String))
+                    {
+                        try
+                        {
+                            temp = dr.GetString(ii);
+                        }
+                        catch (SqlNullValueException ex)
+                        {
+                            temp = "NULL";
+                        }
+
+                        if (ii == (dr.FieldCount - 1))
+                        {
+                            if (temp.Equals("NULL"))
+                                column_values += "NULL)";
+                            else
+                                column_values += string.Format("'{0}')", temp);
+                        }
+                        else
+                        {
+                            if (temp.Equals("NULL"))
+                                column_values += "NULL,";
+                            else
+                                column_values += string.Format("'{0}',", temp);
+                        }
+                    }
+                    else if (mytype == typeof(System.DateTime))
+                    {
+                        string customstr;
+                        DateTime mydatetime;
+                        try
+                        {
+                            mydatetime = dr.GetDateTime(ii);
+                            customstr = mydatetime.ToString("yyyy-MM-dd HH:mm:ss.000");
+                        }
+                        catch (SqlNullValueException ex)
+                        {
+                            customstr = "NULL";
+                        }
+
+                        if (ii == (dr.FieldCount - 1))
+                        {
+                            if (customstr.Equals("NULL"))
+                                column_values += "NULL)";
+                            else
+                                column_values += string.Format("'{0}')", customstr);
+                        }
+                        else
+                        {
+                            if (customstr.Equals("NULL"))
+                                column_values += "NULL,";
+                            else
+                                column_values += string.Format("'{0}',", customstr);
+                        }
+                    }
+                    else if (mytype == typeof(System.Int32))
+                    {
+                        string customstr;
+                        Int32 myint;
+                        try
+                        {
+                            myint = dr.GetInt32(ii);
+                            customstr = myint.ToString();
+                        }
+                        catch (SqlNullValueException ex)
+                        {
+                            customstr = "NULL";
+                        }
+
+                        if (ii == (dr.FieldCount - 1))
+                        {
+                            if (customstr.Equals("NULL"))
+                                column_values += "NULL)";
+                            else
+                                column_values += string.Format("'{0}')", customstr);
+                        }
+                        else
+                        {
+                            if (customstr.Equals("NULL"))
+                                column_values += "NULL,";
+                            else
+                                column_values += string.Format("'{0}',", customstr);
+                        }
+                    }
+                    else if (mytype == typeof(System.Decimal))
+                    {
+                        string customstr;
+                        Decimal mydec;
+                        try
+                        {
+                            mydec = dr.GetDecimal(ii);
+                            customstr = mydec.ToString();
+                        }
+                        catch (SqlNullValueException ex)
+                        {
+                            customstr = "NULL";
+                        }
+
+                        if (ii == (dr.FieldCount - 1))
+                        {
+                            if (customstr.Equals("NULL"))
+                                column_values += "NULL)";
+                            else
+                                column_values += string.Format("'{0}')", customstr);
+                        }
+                        else
+                        {
+                            if (customstr.Equals("NULL"))
+                                column_values += "NULL,";
+                            else
+                                column_values += string.Format("'{0}',", customstr);
+                        }
+                    }
+                    else if (mytype == typeof(System.Boolean))
+                    {
+                        string customstr;
+                        bool mybool;
+                        try
+                        {
+                            mybool = dr.GetBoolean(ii);
+                        }
+                        catch (SqlNullValueException ex)
+                        {
+                            mybool = false;
+                        }
+
+                        if (mybool)
+                            customstr = "1";
+                        else
+                            customstr = "0";
+
+                        if (ii == (dr.FieldCount - 1))
+                        {
+                            if (customstr.Equals("NULL"))
+                                column_values += "NULL)";
+                            else
+                                column_values += string.Format("'{0}')", customstr);
+                        }
+                        else
+                        {
+                            if (customstr.Equals("NULL"))
+                                column_values += "NULL,";
+                            else
+                                column_values += string.Format("'{0}',", customstr);
+                        }
+                    }
+                    else if (mytype == typeof(System.Int16))
+                    {
+                        string customstr;
+                        Int16 myint;
+                        try
+                        {
+                            myint = dr.GetInt16(ii);
+                            customstr = myint.ToString();
+                        }
+                        catch (SqlNullValueException ex)
+                        {
+                            customstr = "NULL";
+                        }
+
+                        if (ii == (dr.FieldCount - 1))
+                        {
+                            if (customstr.Equals("NULL"))
+                                column_values += "NULL)";
+                            else
+                                column_values += string.Format("'{0}')", customstr);
+                        }
+                        else
+                        {
+                            if (customstr.Equals("NULL"))
+                                column_values += "NULL,";
+                            else
+                                column_values += string.Format("'{0}',", customstr);
+                        }
+                    }
+                    else
+                    {
+                        script_writer.WriteLine("mytype={0}", mytype.ToString());
+                    }
+                }
+                script_writer.WriteLine("INSERT INTO {0} {1} VALUES {2}", table_name, column_names, column_values);
+            }
+            dr.Close();
+
+            if (resultcount == 0)
+                script_writer.WriteLine("-- NO INSERT INTO {0}", table_name);
+
+            script_writer.WriteLine();
+            script_writer.WriteLine();
+
+            return resultcount;
+        }
 
 
 
@@ -1072,15 +1293,14 @@ namespace MaxMistakeFixer
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ABT_USERS]", people_code_id);
 
-                script_writer.WriteLine("-- NO NEED TO UPDATE ACADEMIC.ADVISOR COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO NEED TO UPDATE ACADEMIC.COUNSELOR COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO NEED TO UPDATE BUILDING COULD NOT FIND ROWS");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ACADEMIC]", people_code_id, "ACADEMIC.ADVISOR");
+
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ACADEMIC]", people_code_id, "ACADEMIC.COUNSELOR");
+
+
+                script_writer.WriteLine("-- TABLE BUILDING QUERIED BY HAND COULD NOT FIND ROWS");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
@@ -1156,9 +1376,12 @@ namespace MaxMistakeFixer
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SPOUSE]", people_code_id);
 
+
                 script_writer.WriteLine("-- table=MAILING already done it is a leaf-node table");
 
-                script_writer.WriteLine("-- table=[STOPLIST] no data checked by hand");
+
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[STOPLIST]", people_code_id);
+
 
                 script_writer.WriteLine("-- table=STUDENT already done it is a leaf-node table");
 
@@ -1285,9 +1508,8 @@ namespace MaxMistakeFixer
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTSOURCEDISCOUNT]", people_code_id);
 
 
-                script_writer.WriteLine("-- NO DATA IN VIOLATIONS COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[VIOLATIONS]", people_code_id);
+                
 
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TranAttendance]", people_code_id);
@@ -1298,14 +1520,13 @@ namespace MaxMistakeFixer
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TranAttendanceSum]", people_code_id);
 
-                script_writer.WriteLine("-- NO DATA IN SPONSORSTUDENTS COULD NOT FIND ROWS");
+                script_writer.WriteLine("-- NO DATA IN SPONSORSTUDENTS COULD NOT FIND ROWS AT ALL COMPLETELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN SPONSORAGREEMENT COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
 
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SPONSORAGREEMENT]", people_code_id, "SPONSORAGREEMENT.PEOPLE_ORG_CODE_ID");
+                
 
 
 
@@ -1320,10 +1541,8 @@ namespace MaxMistakeFixer
 
 
 
-
-                script_writer.WriteLine("-- NO DATA IN MEDIARIGHTS COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[MEDIARIGHTS]", people_code_id, "MEDIARIGHTS.SPECIFIC_VALUE");
+                
 
 
 
@@ -1336,10 +1555,8 @@ namespace MaxMistakeFixer
 
 
 
-
-                script_writer.WriteLine("-- NO DATA IN RATING COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[RATING]", people_code_id);
+                
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[WAITLIST]", people_code_id);
 
@@ -1347,63 +1564,45 @@ namespace MaxMistakeFixer
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[INTERESTLEVELSHISTORY]", people_code_id);
 
-                script_writer.WriteLine("-- NO DATA IN transcompgroup COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN transcompgroupevent COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcompgroup]", people_code_id);
 
-                script_writer.WriteLine("-- NO DATA IN transcompetency COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcompgroupevent]", people_code_id);
 
-                script_writer.WriteLine("-- NO DATA IN transcompsign COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcompetency]", people_code_id);
 
-                script_writer.WriteLine("-- NO DATA IN transcomptasksign COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcompsign]", people_code_id);
 
-                script_writer.WriteLine("-- NO DATA IN transcompcatnotes COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcomptasksign]", people_code_id);
+
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcompcatnotes]", people_code_id);
+                
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[COMPARISONRESULTS]", people_code_id);
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[COMPARISONRESULTS]", people_code_id, "COMPARISONRESULTS.PEOPLE_CODE_ID2");
 
+                DoSpecialQuery_By_PEOPLE_ID(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[REGISTRATIONPERMISSION]", people_code_id, "REGISTRATIONPERMISSION.STUDENT_ID");
 
-                script_writer.WriteLine("-- NO DATA IN REGISTRATIONPERMISSION COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoSpecialQuery_By_PEOPLE_ID(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[REGISTRATIONPERMISSION]", people_code_id, "REGISTRATIONPERMISSION.PERMISSION_ID");
 
 
-                script_writer.WriteLine("-- NO DATA IN COUNSELOREXCEPTIONS COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[COUNSELOREXCEPTIONS]", people_code_id, "COUNSELOREXCEPTIONS.COUNSELOR_CODE_ID");
 
-                script_writer.WriteLine("-- NO DATA IN EPSCOUNSELORLINK COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[EPSCOUNSELORLINK]", people_code_id, "EPSCOUNSELORLINK.COUNSELOR_CODE_ID");
 
-                script_writer.WriteLine("-- NO DATA IN EPSACADEMIC COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN SPONSORSTUDENTWAIVER COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[EPSACADEMIC]", people_code_id);
 
-                script_writer.WriteLine("-- NO DATA IN SPONSORCHANGES COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoSpecialQuery_By_PEOPLE_ID(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SPONSORSTUDENTWAIVER]", people_code_id, "SPONSORSTUDENTWAIVER.PEOPLE_ID");
 
-                script_writer.WriteLine("-- NO DATA IN TRANSACTIONS COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SPONSORSTUDENTWAIVER]", people_code_id, "SPONSORSTUDENTWAIVER.PEOPLE_ORG_CODE_ID");
+
+
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SPONSORCHANGES]", people_code_id);
+
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSACTIONS]", people_code_id);
+                
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PEOPLESCHOLARSHIP]", people_code_id);
 
@@ -1413,77 +1612,73 @@ namespace MaxMistakeFixer
 
                 script_writer.WriteLine("-- table=FULLPARTHISTORY already done it is a leaf-node table");
 
-                script_writer.WriteLine("-- NO DATA IN StudentProxy COULD NOT FIND ROWS");
+                script_writer.WriteLine("-- NO DATA IN StudentProxy COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN StudentProxyRequest COULD NOT FIND ROWS");
+                script_writer.WriteLine("-- NO DATA IN StudentProxyRequest COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN StudentProxyHistory COULD NOT FIND ROWS");
+                script_writer.WriteLine("-- NO DATA IN StudentProxyHistory COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN AddressApprovalRequest COULD NOT FIND ROWS");
+                script_writer.WriteLine("-- NO DATA IN AddressApprovalRequest COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN Application COULD NOT FIND ROWS");
+                script_writer.WriteLine("-- NO DATA IN Application COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN Inquiry COULD NOT FIND ROWS");
+                script_writer.WriteLine("-- NO DATA IN Inquiry COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[Reported1098TInformation]", people_code_id);
 
-                script_writer.WriteLine("-- NO DATA IN BlockWebRegGroups COULD NOT FIND ROWS");
+                script_writer.WriteLine("-- NO DATA IN BlockWebRegGroups COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN BlockWebRegGroupSections COULD NOT FIND ROWS");
+                script_writer.WriteLine("-- NO DATA IN BlockWebRegGroupSections COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN BlockWebRegRules COULD NOT FIND ROWS");
+                script_writer.WriteLine("-- NO DATA IN BlockWebRegRules COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN BlockWebRegRuleGroups COULD NOT FIND ROWS");
+                script_writer.WriteLine("-- NO DATA IN BlockWebRegRuleGroups COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN BlockWebRegisteredPeople COULD NOT FIND ROWS");
+                script_writer.WriteLine("-- NO DATA IN BlockWebRegisteredPeople COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN InvoiceHeader COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN InvoicePreferredTaxpayer COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[InvoiceHeader]", people_code_id, "InvoiceHeader.People_Org_Code_Id");
+
+
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[InvoicePreferredTaxpayer]", people_code_id, "InvoicePreferredTaxpayer.PeopleOrgCodeId");
+                
 
                 script_writer.WriteLine("-- NO DATA IN SharedAdvisee COULD NOT FIND ROWS");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN SharedAdviseeHistory COULD NOT FIND ROWS");
+                script_writer.WriteLine("-- NO DATA IN SharedAdviseeHistory COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
-                script_writer.WriteLine("-- NO DATA IN AssignmentTemplateShare COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
-
-                script_writer.WriteLine("-- NO DATA IN DeletedChargeCredit COULD NOT FIND ROWS with those peoplecodeid");
+                script_writer.WriteLine("-- NO DATA IN AssignmentTemplateShare COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
                 script_writer.WriteLine();
                 script_writer.WriteLine();
 
 
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[DeletedChargeCredit]", people_code_id, "DeletedChargeCredit.PeopleOrgCodeId");
 
 
                 script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[PEOPLE] ON");
