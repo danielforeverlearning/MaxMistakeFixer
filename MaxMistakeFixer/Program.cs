@@ -926,8 +926,18 @@ namespace MaxMistakeFixer
 
 
             List<string> listpeoplecodeid = new List<string>();
+
+            //****************************************************
+            //These are the 2 needing repair
+            //****************************************************
             listpeoplecodeid.Add("P000074179");
             listpeoplecodeid.Add("P000074226");
+
+            //****************************************************
+            //TEST SUBJECT
+            //***************************************************
+            
+            
 
             for (int ii=0; ii < listpeoplecodeid.Count; ii++)
             {
@@ -1224,8 +1234,6 @@ namespace MaxMistakeFixer
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[STATEMENTLINE]", people_code_id, "STATEMENTLINE.PERSON_CODE_ID");
 
-                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[CASHRECEIPT]", people_code_id, "CASHRECEIPT.PEOPLE_ORG_CODE_ID");
-
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[STATEMENTHEADER]", people_code_id, "STATEMENTHEADER.PEOPLE_ORG_CODE_ID");
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[CASHRECEIPT]", people_code_id, "CASHRECEIPT.PEOPLE_ORG_CODE_ID");
@@ -1518,7 +1526,7 @@ namespace MaxMistakeFixer
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[VIOLATIONSSUMMARY]", people_code_id);
 
-                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TranAttendanceSum]", people_code_id);
+                
 
                 script_writer.WriteLine("-- NO DATA IN SPONSORSTUDENTS COULD NOT FIND ROWS AT ALL COMPLETELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB");
                 script_writer.WriteLine();
