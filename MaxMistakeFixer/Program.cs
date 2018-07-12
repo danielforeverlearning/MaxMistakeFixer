@@ -53,7 +53,7 @@ namespace MaxMistakeFixer
         -- table= PEOPLE trigger= UPDATE declared harmless and taken care of by table = PEOPLE trigger= DELETE below
         ****************************************************************************************************************************************************************************/
 
-        static void DoQuery(ref StreamWriter script_writer, ref SqlConnection conn, string table_name, string people_code_id, string optionalcolumncheck = null)
+        static int DoQuery(ref StreamWriter script_writer, ref SqlConnection conn, string table_name, string people_code_id, string optionalcolumncheck = null)
         {
             string querystr = string.Format("SELECT * FROM {0} WHERE PEOPLE_CODE_ID='{1}'", table_name, people_code_id);
             if (optionalcolumncheck != null)
@@ -273,13 +273,75 @@ namespace MaxMistakeFixer
 
             script_writer.WriteLine();
             script_writer.WriteLine();
+
+            return resultcount;
         }
 
 
 
-        static void DoSpecialChargeCreditDistQuery(ref StreamWriter script_writer, ref SqlConnection conn)
+
+
+
+        static List<string> DoSpecialQuery_CHARGECREDIT_GET_CHARGECREDITNUMBER(ref StreamWriter script_writer, ref SqlConnection conn, string table_name, string people_code_id, string optionalcolumncheck = null)
         {
-            string querystr = "select * FROM [Campus8_ceeb].[dbo].[CHARGECREDITDIST] WHERE CHARGECREDITNUMBER = '1767535' OR CHARGECREDITNUMBER = '1767538' OR CHARGECREDITNUMBER = '1767540'";
+            string querystr = string.Format("SELECT CHARGECREDITNUMBER FROM {0} WHERE PEOPLE_CODE_ID='{1}'", table_name, people_code_id);
+            if (optionalcolumncheck != null)
+                querystr = string.Format("SELECT CHARGECREDITNUMBER FROM {0} WHERE {1}='{2}'", table_name, optionalcolumncheck, people_code_id);
+
+            script_writer.WriteLine("-- " + querystr);
+
+            SqlCommand command = new SqlCommand(querystr, conn);
+            SqlDataReader dr = command.ExecuteReader();
+            List<string> mylist = new List<string>();
+
+            while (dr.Read())
+            {
+                for (int ii = 0; ii < dr.FieldCount; ii++)
+                {
+                    string myname = dr.GetName(ii);
+
+                    Type mytype = dr.GetFieldType(ii);
+                    if (mytype == typeof(System.Int32))
+                    {
+                        string customstr;
+                        Int32 myint;
+                        try
+                        {
+                            myint = dr.GetInt32(ii);
+                            customstr = myint.ToString();
+                        }
+                        catch (SqlNullValueException ex)
+                        {
+                            customstr = "NULL";
+                        }
+
+                        mylist.Add(customstr);
+                    }
+                    else
+                    {
+                        throw new Exception("Forced exception expection Int32 in DoSpecialQuery_CHARGECREDIT_GET_CHARGECREDITNUMBER!!!!!");
+                    }
+                }
+            }
+            dr.Close();
+            return mylist;
+        }
+
+
+
+
+        static void DoSpecialChargeCreditDistQuery(ref List<string> chargecreditnumber_list, ref StreamWriter script_writer, ref SqlConnection conn)
+        {
+            //PEOPLE_CODE_ID==P000074179  select * FROM [Campus8_ceeb].[dbo].[CHARGECREDITDIST] WHERE CHARGECREDITNUMBER = '1767535' OR CHARGECREDITNUMBER = '1767538' OR CHARGECREDITNUMBER = '1767540'
+            string bigchargestr = "";
+            for (int ii=0; ii < chargecreditnumber_list.Count; ii++)
+            {
+                bigchargestr += string.Format("CHARGECREDITNUMBER = '{0}'", chargecreditnumber_list[ii]);
+                if (ii != (chargecreditnumber_list.Count - 1))
+                    bigchargestr += " OR ";
+            }
+
+            string querystr = string.Format("select * FROM [Campus8_ceeb].[dbo].[CHARGECREDITDIST] WHERE {0}", bigchargestr);
 
             script_writer.WriteLine("-- " + querystr);
 
@@ -939,13 +1001,9 @@ namespace MaxMistakeFixer
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SECTIONPER]", people_code_id, "SECTIONPER.PERSON_CODE_ID");
 
-                script_writer.WriteLine("-- NO NEED TO UPDATE table=STATEMENTLINE COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[STATEMENTLINE]", people_code_id, "STATEMENTLINE.PERSON_CODE_ID");
 
-                script_writer.WriteLine("-- NO NEED TO UPDATE table=CASHRECEIPT COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[CASHRECEIPT]", people_code_id, "CASHRECEIPT.PEOPLE_ORG_CODE_ID");
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[STATEMENTHEADER]", people_code_id, "STATEMENTHEADER.PEOPLE_ORG_CODE_ID");
 
@@ -987,9 +1045,13 @@ namespace MaxMistakeFixer
 
 
                 script_writer.WriteLine("-- table=CHARGECREDIT is a special leafnode because its query is not on peoplecodeid but on CHARGECREDITNUMBER");
-                if (people_code_id.Equals("P000074179"))
-                    DoSpecialChargeCreditDistQuery(ref script_writer, ref conn);
 
+                int chargecreditrows = DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[CHARGECREDIT]", people_code_id, "CHARGECREDIT.PEOPLE_ORG_CODE_ID");
+                if (chargecreditrows > 0)
+                {
+                    List<string> chargecreditnumber_list = DoSpecialQuery_CHARGECREDIT_GET_CHARGECREDITNUMBER(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[CHARGECREDIT]", people_code_id, "CHARGECREDIT.PEOPLE_ORG_CODE_ID");
+                    DoSpecialChargeCreditDistQuery(ref chargecreditnumber_list, ref script_writer, ref conn);
+                }
 
 
 
@@ -998,11 +1060,6 @@ namespace MaxMistakeFixer
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PEOPLEORGBALANCE]", people_code_id, "PEOPLEORGBALANCE.PEOPLE_ORG_CODE_ID");
                 script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[PEOPLEORGBALANCE] OFF");
 
-
-
-
-
-                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[CHARGECREDIT]", people_code_id, "CHARGECREDIT.PEOPLE_ORG_CODE_ID");
 
 
 
