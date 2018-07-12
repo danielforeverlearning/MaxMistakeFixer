@@ -278,10 +278,9 @@ namespace MaxMistakeFixer
         }
 
 
-        static int DoSpecialQuery_By_PEOPLE_ID(ref StreamWriter script_writer, ref SqlConnection conn, string table_name, string people_code_id, string mandatorycolumncheck)
+        static int DoSpecialQuery_Custom(ref StreamWriter script_writer, ref SqlConnection conn, string table_name, string mandatorycolumncheck, string id_str)
         {
-            string people_id = people_code_id.Replace("P", "");
-            string querystr = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", table_name, mandatorycolumncheck, people_id);
+            string querystr = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", table_name, mandatorycolumncheck, id_str);
 
             script_writer.WriteLine("-- " + querystr);
 
@@ -926,12 +925,19 @@ namespace MaxMistakeFixer
 
 
             List<string> listpeoplecodeid = new List<string>();
+            List<string> list_person_id = new List<string>();
+            List<string> list_people_id = new List<string>();
 
             //****************************************************
             //These are the 2 needing repair
             //****************************************************
             listpeoplecodeid.Add("P000074179");
+            list_people_id.Add("000074179");
+            list_person_id.Add("69700");
+
             listpeoplecodeid.Add("P000074226");
+            list_people_id.Add("000074226");
+            list_person_id.Add("69747");
 
             //****************************************************
             //TEST SUBJECT
@@ -1136,7 +1142,7 @@ namespace MaxMistakeFixer
 
 
                 script_writer.WriteLine("-- ********************************************************************************");
-                script_writer.WriteLine("-- From ACADEMIC triggers investigation:");
+                script_writer.WriteLine("-- START ACADEMIC triggers investigation:");
                 script_writer.WriteLine("-- ********************************************************************************");
                 script_writer.WriteLine("-- PEOPLETYPE leafnode above");
                 script_writer.WriteLine("-- SOURCEDETAIL leafnode above");
@@ -1148,37 +1154,68 @@ namespace MaxMistakeFixer
                 script_writer.WriteLine("-- TRANSCRIPTDETAIL leafnode above");
                 script_writer.WriteLine("-- TRANSCRIPTMARKETING leafnode above");
                 script_writer.WriteLine("-- TRANSCRIPTHEADER leafnode above");
+                script_writer.WriteLine("-- transcompgroupevent leafnode level2table queried way below");
+
+                script_writer.WriteLine("-- RegistrationOverride ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoSpecialQuery_Custom(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[RegistrationOverride]", "RegistrationOverride.PersonId", list_person_id[ii]);
+
+                script_writer.WriteLine("-- EPSACADEMIC ..... From ACADEMIC triggers investigation ..... QUERYING");
+                script_writer.WriteLine("-- EPSACADEMIC ..... ok ABSOLUTELY NO DATA FOUND COMPLETELY EMPTY TABLES IN Campus8 and Campus8_ceeb");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[EPSACADEMIC]", people_code_id);
+
+                script_writer.WriteLine("-- ALUMNICLASS ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ALUMNICLASS]", people_code_id);
+
+                script_writer.WriteLine("-- ALUMNIDEGREE ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ALUMNIDEGREE]", people_code_id);
 
 
-                script_writer.WriteLine("-- RegistrationOverride ..... ok no data found on PersonId in ceeb or test");
-                script_writer.WriteLine("-- EPSACADEMIC ..... ok no data found on peoplecodeid in ceeb or test");
-                script_writer.WriteLine("-- ALUMNICLASS ..... ok no data found on peoplecodeid in ceeb or test");
-                script_writer.WriteLine("-- ALUMNIDEGREE ..... ok no data found on peoplecodeid in ceeb or test");
-                script_writer.WriteLine("-- ORGANIZATION ..... ok no data found on peoplecodeid in ceeb or test");
-                script_writer.WriteLine("-- TermLevelCreditLimit ..... ok no data found on peoplecodeid in ceeb or test");
-                script_writer.WriteLine("-- GRADECHANGE ..... ok no data found on peoplecodeid in ceeb or test");
-                script_writer.WriteLine("-- STDDEGREQEVENT ..... ok no data found on peoplecodeid in ceeb or test");
+                script_writer.WriteLine("-- ORGANIZATION ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ORGANIZATION]", people_code_id, "ORGANIZATION.ORG_CODE_ID");
 
-                script_writer.WriteLine("-- TRANATTENDANCE ..... ok no data found on peoplecodeid in ceeb or test");
-                script_writer.WriteLine("-- TRANSEDUCATION ..... ok no data found on peoplecodeid in ceeb or test");
+                script_writer.WriteLine("-- TermLevelCreditLimit ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TermLevelCreditLimit]", people_code_id, "TermLevelCreditLimit.People_Code_Id");
 
-                script_writer.WriteLine("-- TRANSCRIPTGRADING ..... ok no data found on peoplecodeid in ceeb or test");
-                script_writer.WriteLine("-- TRANSCRIPTSOURCEDISCOUNT ..... ok no data found on peoplecodeid in ceeb or test");
-                script_writer.WriteLine("-- TRANSCRIPTPENDING ..... ok no data found on peoplecodeid in ceeb or test");
-                script_writer.WriteLine("-- TRANSCRIPTGPA ..... ok no data found on peoplecodeid in ceeb or test");
-                script_writer.WriteLine("-- TRANSCRIPTCOMMENT ..... ok no data found on peoplecodeid in ceeb or test");
+                script_writer.WriteLine("-- GRADECHANGE ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[GRADECHANGE]", people_code_id);
+
+                script_writer.WriteLine("-- STDDEGREQEVENT ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[STDDEGREQEVENT]", people_code_id);
+
+                script_writer.WriteLine("-- TRANATTENDANCE ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANATTENDANCE]", people_code_id);
+
+                script_writer.WriteLine("-- TRANSEDUCATION ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSEDUCATION]", people_code_id);
+
+                script_writer.WriteLine("-- TRANSCRIPTGRADING ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTGRADING]", people_code_id);
+
+                script_writer.WriteLine("-- TRANSCRIPTSOURCEDISCOUNT ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTSOURCEDISCOUNT]", people_code_id);
+
+                script_writer.WriteLine("-- TRANSCRIPTPENDING ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTPENDING]", people_code_id);
+
+                script_writer.WriteLine("-- TRANSCRIPTGPA ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTGPA]", people_code_id);
+
+                script_writer.WriteLine("-- TRANSCRIPTCOMMENT ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTCOMMENT]", people_code_id);
+
                 script_writer.WriteLine("-- TRANSCRIPTAWARD ..... ok no data found on peoplecodeid in ceeb or test");
                 script_writer.WriteLine("-- TRANSCRIPTHONORS ..... ok no data found on peoplecodeid in ceeb or test");
                 script_writer.WriteLine("-- TRANSCRIPTDEGREE ..... ok no data found on peoplecodeid in ceeb or test");
-                
-                script_writer.WriteLine("-- transcompgroupevent ..... ok no data found on peoplecodeid in ceeb or test");
-                script_writer.WriteLine("-- transcompgroup ..... ok no data found on peoplecodeid in ceeb or test");
 
                 script_writer.WriteLine("-- [SectionWebMembershipRequest] ..... ok no data found on peoplecodeid in ceeb or test");
 
+                script_writer.WriteLine("-- ********************************************************************************");
+                script_writer.WriteLine("-- END ACADEMIC triggers investigation:");
+                script_writer.WriteLine("-- ********************************************************************************");
+
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ACTIVITY]", people_code_id);
 
-                script_writer.WriteLine("-- table=SOURCEDETAIL taken care of by trigger in table=ACADEMIC");
+                script_writer.WriteLine("-- table=SOURCEDETAIL taken care of by trigger in table=ACADEMIC way above it was declared as leaf-node");
 
 
 
@@ -1572,9 +1609,16 @@ namespace MaxMistakeFixer
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[INTERESTLEVELSHISTORY]", people_code_id);
 
+                script_writer.WriteLine("-- table=transcompgroup ..... delete trigger says touches transcompgroupevent and transcompetency");
+                script_writer.WriteLine("-- table=transcompgroup ..... transcompgroupevent is a leafnode it has no delete trigger");
+                script_writer.WriteLine("-- table=transcompgroup ..... transcompetency touches transcomptasks, TRANSCOMPSIGN, TransCompNotes, transcompcatnotes ..... if resultrows after query on transcompgroup we are gonna throw exception for now so you can look at those delete triggers");
+                int transcompgroup_results_count = DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcompgroup]", people_code_id);
+                if (transcompgroup_results_count > 0)
+                {
+                    throw new Exception("NEED TO INVESTIGATE ALL DELETE TRIGGERS BELOW transcompgroup did not do that yet!!!!!");
+                }
 
-                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcompgroup]", people_code_id);
-
+                script_writer.WriteLine("-- table=transcompgroupevent ..... we found data declared to be leafnode because it has no delete trigger");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcompgroupevent]", people_code_id);
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcompetency]", people_code_id);
@@ -1590,9 +1634,9 @@ namespace MaxMistakeFixer
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[COMPARISONRESULTS]", people_code_id, "COMPARISONRESULTS.PEOPLE_CODE_ID2");
 
-                DoSpecialQuery_By_PEOPLE_ID(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[REGISTRATIONPERMISSION]", people_code_id, "REGISTRATIONPERMISSION.STUDENT_ID");
+                DoSpecialQuery_Custom(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[REGISTRATIONPERMISSION]", "REGISTRATIONPERMISSION.STUDENT_ID", list_people_id[ii]);
 
-                DoSpecialQuery_By_PEOPLE_ID(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[REGISTRATIONPERMISSION]", people_code_id, "REGISTRATIONPERMISSION.PERMISSION_ID");
+                DoSpecialQuery_Custom(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[REGISTRATIONPERMISSION]", "REGISTRATIONPERMISSION.PERMISSION_ID", list_people_id[ii]);
 
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[COUNSELOREXCEPTIONS]", people_code_id, "COUNSELOREXCEPTIONS.COUNSELOR_CODE_ID");
@@ -1602,7 +1646,7 @@ namespace MaxMistakeFixer
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[EPSACADEMIC]", people_code_id);
 
-                DoSpecialQuery_By_PEOPLE_ID(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SPONSORSTUDENTWAIVER]", people_code_id, "SPONSORSTUDENTWAIVER.PEOPLE_ID");
+                DoSpecialQuery_Custom(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SPONSORSTUDENTWAIVER]", "SPONSORSTUDENTWAIVER.PEOPLE_ID", list_people_id[ii]);
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SPONSORSTUDENTWAIVER]", people_code_id, "SPONSORSTUDENTWAIVER.PEOPLE_ORG_CODE_ID");
 
