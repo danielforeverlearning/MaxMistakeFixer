@@ -482,6 +482,35 @@ namespace MaxMistakeFixer
                                 column_values += string.Format("'{0}',", customstr);
                         }
                     }
+                    else if (mytype == typeof(System.Byte))
+                    {
+                        string customstr;
+                        Byte mybyte;
+                        try
+                        {
+                            mybyte = dr.GetByte(ii);
+                            customstr = mybyte.ToString();
+                        }
+                        catch (SqlNullValueException ex)
+                        {
+                            customstr = "NULL";
+                        }
+
+                        if (ii == (dr.FieldCount - 1))
+                        {
+                            if (customstr.Equals("NULL"))
+                                column_values += "NULL)";
+                            else
+                                column_values += string.Format("'{0}')", customstr);
+                        }
+                        else
+                        {
+                            if (customstr.Equals("NULL"))
+                                column_values += "NULL,";
+                            else
+                                column_values += string.Format("'{0}',", customstr);
+                        }
+                    }
                     else
                     {
                         script_writer.WriteLine("mytype={0}", mytype.ToString());
@@ -783,127 +812,84 @@ namespace MaxMistakeFixer
             script_writer.WriteLine("BEGIN TRANSACTION FixMaxMistake;");
 
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_people] ON [dbo].[PEOPLE];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_people] ON [dbo].[PEOPLE];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_people] ON [Campus8_ceeb].[dbo].[PEOPLE];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_people] ON [Campus8_ceeb].[dbo].[PEOPLE];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_studentfinancial] ON [dbo].[STUDENTFINANCIAL];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_studentfinancial] ON [dbo].[STUDENTFINANCIAL];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_studentfinancial] ON [Campus8_ceeb].[dbo].[STUDENTFINANCIAL];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_studentfinancial] ON [Campus8_ceeb].[dbo].[STUDENTFINANCIAL];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiStudent] ON [dbo].[STUDENT];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuStudent] ON [dbo].[STUDENT];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiMailing] ON [dbo].[MAILING];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuMailing] ON [dbo].[MAILING];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiAddress] ON [dbo].[ADDRESS];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuAddress] ON [dbo].[ADDRESS];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiPeopleType] ON [dbo].[PEOPLETYPE];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuPeopleType] ON [dbo].[PEOPLETYPE];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiStudent] ON [Campus8_ceeb].[dbo].[STUDENT];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuStudent] ON [Campus8_ceeb].[dbo].[STUDENT];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiSourceDetail] ON [dbo].[SOURCEDETAIL];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuSourceDetail] ON [dbo].[SOURCEDETAIL];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiMailing] ON [Campus8_ceeb].[dbo].[MAILING];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuMailing] ON [Campus8_ceeb].[dbo].[MAILING];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiouStageHistory] ON [dbo].[STAGEHISTORY];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiAddress] ON [Campus8_ceeb].[dbo].[ADDRESS];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuAddress] ON [Campus8_ceeb].[dbo].[ADDRESS];");
+
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiPeopleType] ON [Campus8_ceeb].[dbo].[PEOPLETYPE];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuPeopleType] ON [Campus8_ceeb].[dbo].[PEOPLETYPE];");
+
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiSourceDetail] ON [Campus8_ceeb].[dbo].[SOURCEDETAIL];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuSourceDetail] ON [Campus8_ceeb].[dbo].[SOURCEDETAIL];");
+
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiouStageHistory] ON [Campus8_ceeb].[dbo].[STAGEHISTORY];");
 
             script_writer.WriteLine("-- FULLPARTHISTORY NO TRIGGERS");
             script_writer.WriteLine();
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_education] ON [dbo].[EDUCATION];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_education] ON [dbo].[EDUCATION];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_education] ON [Campus8_ceeb].[dbo].[EDUCATION];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_education] ON [Campus8_ceeb].[dbo].[EDUCATION];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_academic] ON [dbo].[ACADEMIC];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_academic] ON [dbo].[ACADEMIC];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_acadkey_change] ON [dbo].[ACADEMIC];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_academic] ON [Campus8_ceeb].[dbo].[ACADEMIC];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_academic] ON [Campus8_ceeb].[dbo].[ACADEMIC];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_acadkey_change] ON [Campus8_ceeb].[dbo].[ACADEMIC];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_transcriptdetail] ON [dbo].[TRANSCRIPTDETAIL];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_transcriptdetail] ON [dbo].[TRANSCRIPTDETAIL];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[web3_tu_drop_notif] ON [dbo].[TRANSCRIPTDETAIL];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[web3_tu_transcriptdetail] ON [dbo].[TRANSCRIPTDETAIL];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_transcriptdetail] ON [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_transcriptdetail] ON [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[web3_tu_drop_notif] ON [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[web3_tu_transcriptdetail] ON [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL];");
 
             script_writer.WriteLine("-- TRANSEDUCATION NO TRIGGERS");
             script_writer.WriteLine();
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tI_TranscriptMarketing] ON [dbo].[TRANSCRIPTMARKETING];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tU_TranscriptMarketing] ON [dbo].[TRANSCRIPTMARKETING];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tI_TranscriptMarketing] ON [Campus8_ceeb].[dbo].[TRANSCRIPTMARKETING];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tU_TranscriptMarketing] ON [Campus8_ceeb].[dbo].[TRANSCRIPTMARKETING];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_transcriptheader] ON [dbo].[TRANSCRIPTHEADER];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_transcriptheader] ON [Campus8_ceeb].[dbo].[TRANSCRIPTHEADER];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_academicinterest] ON [dbo].[ACADEMICINTEREST];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_academicinterest] ON [dbo].[ACADEMICINTEREST];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_academicinterest] ON [Campus8_ceeb].[dbo].[ACADEMICINTEREST];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_academicinterest] ON [Campus8_ceeb].[dbo].[ACADEMICINTEREST];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_testscores] ON [dbo].[TESTSCORES];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_testscores] ON [dbo].[TESTSCORES];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_testscores] ON [Campus8_ceeb].[dbo].[TESTSCORES];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_testscores] ON [Campus8_ceeb].[dbo].[TESTSCORES];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_residency] ON [dbo].[RESIDENCY];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_residency] ON [dbo].[RESIDENCY];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_residency] ON [Campus8_ceeb].[dbo].[RESIDENCY];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_residency] ON [Campus8_ceeb].[dbo].[RESIDENCY];");
 
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_chargecreditdist] ON [dbo].[CHARGECREDITDIST];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_chargecreditdist] ON [dbo].[CHARGECREDITDIST];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_chargecreditdist] ON [Campus8_ceeb].[dbo].[CHARGECREDITDIST];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_chargecreditdist] ON [Campus8_ceeb].[dbo].[CHARGECREDITDIST];");
 
             script_writer.WriteLine("-- PEOPLEORGBALANCE NO TRIGGERS");
             script_writer.WriteLine();
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiChargeCredit] ON [dbo].[CHARGECREDIT];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuChargeCredit] ON [dbo].[CHARGECREDIT];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiChargeCredit] ON [Campus8_ceeb].[dbo].[CHARGECREDIT];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuChargeCredit] ON [Campus8_ceeb].[dbo].[CHARGECREDIT];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_actionschedule] ON [dbo].[ACTIONSCHEDULE];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_actionschedule] ON [dbo].[ACTIONSCHEDULE];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_actionschedule] ON [Campus8_ceeb].[dbo].[ACTIONSCHEDULE];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_actionschedule] ON [Campus8_ceeb].[dbo].[ACTIONSCHEDULE];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_demographics] ON [dbo].[DEMOGRAPHICS];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_demographics] ON [dbo].[DEMOGRAPHICS];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_demographics] ON [Campus8_ceeb].[dbo].[DEMOGRAPHICS];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_demographics] ON [Campus8_ceeb].[dbo].[DEMOGRAPHICS];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiAddressSchedule] ON [dbo].[ADDRESSSCHEDULE];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuAddressSchedule] ON [dbo].[ADDRESSSCHEDULE];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiAddressSchedule] ON [Campus8_ceeb].[dbo].[ADDRESSSCHEDULE];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuAddressSchedule] ON [Campus8_ceeb].[dbo].[ADDRESSSCHEDULE];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuAddressHierarchyUnique] ON [dbo].[ADDRESSHIERARCHYUNIQUE];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuAddressHierarchyUnique] ON [Campus8_ceeb].[dbo].[ADDRESSHIERARCHYUNIQUE];");
 
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_combinemailing] ON [dbo].[COMBINEMAILING];");
-            script_writer.WriteLine("GO");
-            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_combinemailing] ON [dbo].[COMBINEMAILING];");
-            script_writer.WriteLine("GO");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_combinemailing] ON [Campus8_ceeb].[dbo].[COMBINEMAILING];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_combinemailing] ON [Campus8_ceeb].[dbo].[COMBINEMAILING];");
 
             script_writer.WriteLine("-- ADVANCENAME NO TRIGGERS");
             script_writer.WriteLine();
@@ -931,19 +917,14 @@ namespace MaxMistakeFixer
             //****************************************************
             //These are the 2 needing repair
             //****************************************************
-            listpeoplecodeid.Add("P000074179");
-            list_people_id.Add("000074179");
-            list_person_id.Add("69700");
+            //listpeoplecodeid.Add("P000074179");
+            //list_people_id.Add("000074179");
+            //list_person_id.Add("69700");
 
-            listpeoplecodeid.Add("P000074226");
-            list_people_id.Add("000074226");
-            list_person_id.Add("69747");
+            //listpeoplecodeid.Add("P000074226");
+            //list_people_id.Add("000074226");
+            //list_person_id.Add("69747");
 
-            //****************************************************
-            //TEST SUBJECT
-            //***************************************************
-            
-            
 
             for (int ii=0; ii < listpeoplecodeid.Count; ii++)
             {
@@ -1131,10 +1112,10 @@ namespace MaxMistakeFixer
 
                 //TRANSCRIPTHEADER trigger=delete
                 //TRANSCRIPTHEADER trigger=delete  touches TRANSCRIPTDETAIL leafnode above
-                //TRANSCRIPTHEADER trigger=delete  touches TRANSCRIPTDEGREE no data 
-                //TRANSCRIPTHEADER trigger=delete  touches TRANSCRIPTHONORS no data 
-                //TRANSCRIPTHEADER trigger=delete  touches TRANSCRIPTGPA no data 
-                //TRANSCRIPTHEADER trigger=delete  touches TRANSCRIPTAWARD no data 
+                //TRANSCRIPTHEADER trigger=delete  touches TRANSCRIPTDEGREE
+                //TRANSCRIPTHEADER trigger=delete  touches TRANSCRIPTHONORS 
+                //TRANSCRIPTHEADER trigger=delete  touches TRANSCRIPTGPA 
+                //TRANSCRIPTHEADER trigger=delete  touches TRANSCRIPTAWARD 
                 //TRANSCRIPTHEADER trigger=delete  touches TRANSEDUCATION leafnode above
                 //TRANSCRIPTHEADER is a leafnode now
 
@@ -1182,12 +1163,6 @@ namespace MaxMistakeFixer
                 script_writer.WriteLine("-- STDDEGREQEVENT ..... From ACADEMIC triggers investigation ..... QUERYING");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[STDDEGREQEVENT]", people_code_id);
 
-                script_writer.WriteLine("-- TRANATTENDANCE ..... From ACADEMIC triggers investigation ..... QUERYING");
-                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANATTENDANCE]", people_code_id);
-
-                script_writer.WriteLine("-- TRANSEDUCATION ..... From ACADEMIC triggers investigation ..... QUERYING");
-                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSEDUCATION]", people_code_id);
-
                 script_writer.WriteLine("-- TRANSCRIPTGRADING ..... From ACADEMIC triggers investigation ..... QUERYING");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTGRADING]", people_code_id);
 
@@ -1203,11 +1178,19 @@ namespace MaxMistakeFixer
                 script_writer.WriteLine("-- TRANSCRIPTCOMMENT ..... From ACADEMIC triggers investigation ..... QUERYING");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTCOMMENT]", people_code_id);
 
-                script_writer.WriteLine("-- TRANSCRIPTAWARD ..... ok no data found on peoplecodeid in ceeb or test");
-                script_writer.WriteLine("-- TRANSCRIPTHONORS ..... ok no data found on peoplecodeid in ceeb or test");
-                script_writer.WriteLine("-- TRANSCRIPTDEGREE ..... ok no data found on peoplecodeid in ceeb or test");
+                script_writer.WriteLine("-- TRANSCRIPTAWARD ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTAWARD]", people_code_id);
+                
 
-                script_writer.WriteLine("-- [SectionWebMembershipRequest] ..... ok no data found on peoplecodeid in ceeb or test");
+                script_writer.WriteLine("-- TRANSCRIPTHONORS ..... From ACADEMIC triggers investigation ..... QUERYING");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTHONORS]", people_code_id);
+
+                script_writer.WriteLine("-- TRANSCRIPTDEGREE ..... From ACADEMIC triggers investigation ..... QUERYING");
+                script_writer.WriteLine("SET IDENTITY_INSERT[Campus8_ceeb].[dbo].[TRANSCRIPTDEGREE] ON");
+                DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTDEGREE]", people_code_id);
+                script_writer.WriteLine("SET IDENTITY_INSERT[Campus8_ceeb].[dbo].[TRANSCRIPTDEGREE] OFF");
+
+                script_writer.WriteLine("-- [SectionWebMembershipRequest] ..... ABSOLUTELY NO DATA IN TABLE FOR CAMPUS8 OR FOR CAMPUS8_CEEB !!!!!");
 
                 script_writer.WriteLine("-- ********************************************************************************");
                 script_writer.WriteLine("-- END ACADEMIC triggers investigation:");
@@ -1401,7 +1384,9 @@ namespace MaxMistakeFixer
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[DEDICATIONS]", people_code_id);
 
+                script_writer.WriteLine("-- IF THERE ARE INSERTS INTO GOVERNMENT THEN MUST TAKE OFF GOVERNMENT_KEY !!!!! its identity column !!!!!");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[Government]", people_code_id);
+                
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[GOVTFINANCIAL]", people_code_id);
 
