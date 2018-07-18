@@ -850,6 +850,8 @@ namespace MaxMistakeFixer
             script_writer.WriteLine("DISABLE TRIGGER[dbo].[web3_tu_drop_notif] ON [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL];");
             script_writer.WriteLine("DISABLE TRIGGER[dbo].[web3_tu_transcriptdetail] ON [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL];");
 
+
+            script_writer.WriteLine();
             script_writer.WriteLine("-- TRANSEDUCATION NO TRIGGERS");
             script_writer.WriteLine();
 
@@ -857,6 +859,29 @@ namespace MaxMistakeFixer
             script_writer.WriteLine("DISABLE TRIGGER[dbo].[tU_TranscriptMarketing] ON [Campus8_ceeb].[dbo].[TRANSCRIPTMARKETING];");
 
             script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_transcriptheader] ON [Campus8_ceeb].[dbo].[TRANSCRIPTHEADER];");
+
+
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_transcriptgpa] ON [Campus8_ceeb].[dbo].[TRANSCRIPTGPA];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_transcriptgpa] ON [Campus8_ceeb].[dbo].[TRANSCRIPTGPA];");
+
+
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_transcriptcomment] ON [Campus8_ceeb].[dbo].[TRANSCRIPTCOMMENT];");
+
+
+
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiTranscriptAward] ON [Campus8_ceeb].[dbo].[TRANSCRIPTAWARD];");
+            script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuTranscriptAward] ON [Campus8_ceeb].[dbo].[TRANSCRIPTAWARD];");
+
+
+            script_writer.WriteLine();
+            script_writer.WriteLine("-- TRANSCRIPTHONORS NO TRIGGERS");
+            script_writer.WriteLine();
+
+
+            script_writer.WriteLine();
+            script_writer.WriteLine("-- TRANSCRIPTDEGREE NO TRIGGERS");
+            script_writer.WriteLine();
+
 
             script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_academicinterest] ON [Campus8_ceeb].[dbo].[ACADEMICINTEREST];");
             script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_academicinterest] ON [Campus8_ceeb].[dbo].[ACADEMICINTEREST];");
@@ -903,6 +928,9 @@ namespace MaxMistakeFixer
             script_writer.WriteLine("-- PEOPLEMETADATA NO TRIGGERS");
             script_writer.WriteLine();
 
+            script_writer.WriteLine("-- USERDEFINEDIND NO TRIGGERS");
+            script_writer.WriteLine();
+
             script_writer.WriteLine();
             script_writer.WriteLine();
 
@@ -924,6 +952,8 @@ namespace MaxMistakeFixer
             //listpeoplecodeid.Add("P000074226");
             //list_people_id.Add("000074226");
             //list_person_id.Add("69747");
+
+            
 
 
             for (int ii=0; ii < listpeoplecodeid.Count; ii++)
@@ -1091,9 +1121,9 @@ namespace MaxMistakeFixer
                 //TRANSCRIPTDETAIL tirgger=delete EXEC sp_dact_TRANSCRIPTDETAIL does nothing
                 //TRANSCRIPTDETAIL ok declaring leafnode
 
-                script_writer.WriteLine("SET IDENTITY_INSERT[Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL] ON");
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL] ON");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL]", people_code_id);
-                script_writer.WriteLine("SET IDENTITY_INSERT[Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL] OFF");
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL] OFF");
 
 
 
@@ -1178,6 +1208,7 @@ namespace MaxMistakeFixer
                 script_writer.WriteLine("-- TRANSCRIPTCOMMENT ..... From ACADEMIC triggers investigation ..... QUERYING");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTCOMMENT]", people_code_id);
 
+
                 script_writer.WriteLine("-- TRANSCRIPTAWARD ..... From ACADEMIC triggers investigation ..... QUERYING");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTAWARD]", people_code_id);
                 
@@ -1186,9 +1217,9 @@ namespace MaxMistakeFixer
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTHONORS]", people_code_id);
 
                 script_writer.WriteLine("-- TRANSCRIPTDEGREE ..... From ACADEMIC triggers investigation ..... QUERYING");
-                script_writer.WriteLine("SET IDENTITY_INSERT[Campus8_ceeb].[dbo].[TRANSCRIPTDEGREE] ON");
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[TRANSCRIPTDEGREE] ON");
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTDEGREE]", people_code_id);
-                script_writer.WriteLine("SET IDENTITY_INSERT[Campus8_ceeb].[dbo].[TRANSCRIPTDEGREE] OFF");
+                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[TRANSCRIPTDEGREE] OFF");
 
                 script_writer.WriteLine("-- [SectionWebMembershipRequest] ..... ABSOLUTELY NO DATA IN TABLE FOR CAMPUS8 OR FOR CAMPUS8_CEEB !!!!!");
 
@@ -1572,13 +1603,17 @@ namespace MaxMistakeFixer
 
 
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[MEDIARIGHTS]", people_code_id, "MEDIARIGHTS.SPECIFIC_VALUE");
-                
 
 
 
 
 
                 script_writer.WriteLine("-- table=PeopleMetaData ..... we found data declared to be leafnode because it has no delete trigger");
+                script_writer.WriteLine("-- ************************************************* WARNING ****************************************************************************************");
+                script_writer.WriteLine("--PEOPLEMETADATA has computed values");
+                script_writer.WriteLine("--[Gender_Code_Desc],[Create_Date],[Create_Time],[Create_Opid],[Create_Terminal],[Revision_Date],[Revision_Time],[Revision_Opid],[Revision_Terminal],");
+                script_writer.WriteLine("-- **************************************************************************************************************************************************");
+
                 DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PeopleMetaData]", people_code_id);
 
 
