@@ -1377,61 +1377,61 @@ namespace MaxMistakeFixer
 
                 DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[GIFTCREDITDESIGNATION]", people_code_id, "GIFTCREDITDESIGNATION.ASSOCIATED_ID");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[GIFTCREDITDETAIL]", people_code_id, "GIFTCREDITDETAIL.ASSOCIATED_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[GIFTCREDITDETAIL]", people_code_id, "GIFTCREDITDETAIL.ASSOCIATED_ID");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[GIVINGSUMMARY]", people_code_id, "GIVINGSUMMARY.PEOPLE_ORG_CODE_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[GIVINGSUMMARY]", people_code_id, "GIVINGSUMMARY.PEOPLE_ORG_CODE_ID");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[GIFTCLUB]", people_code_id, "GIFTCLUB.PEOPLE_ORG_CODE_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[GIFTCLUB]", people_code_id, "GIFTCLUB.PEOPLE_ORG_CODE_ID");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[GIFTDEDICATIONS]", people_code_id, "GIFTDEDICATIONS.PEOPLE_ORG_CODE_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[GIFTDEDICATIONS]", people_code_id, "GIFTDEDICATIONS.PEOPLE_ORG_CODE_ID");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[GIFTDEFERRED]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[GIFTDEFERRED]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[GIFTNONCASH]", people_code_id, "GIFTNONCASH.PEOPLE_ORG_CODE_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[GIFTNONCASH]", people_code_id, "GIFTNONCASH.PEOPLE_ORG_CODE_ID");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[DEDICATIONS]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[DEDICATIONS]", people_code_id);
 
-                script_writer.WriteLine("-- IF THERE ARE INSERTS INTO GOVERNMENT THEN MUST TAKE OFF GOVERNMENT_KEY !!!!! its identity column !!!!!");
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[Government]", people_code_id);
+                INSERTS.Add("-- IF THERE ARE INSERTS INTO GOVERNMENT THEN MUST TAKE OFF GOVERNMENT_KEY !!!!! its identity column !!!!!");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[Government]", people_code_id);
                 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[GOVTFINANCIAL]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[GOVTFINANCIAL]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[EXCHANGEVISITOR]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[EXCHANGEVISITOR]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[GovernmentNotes]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[GovernmentNotes]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[IMMUNIZATION]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[IMMUNIZATION]", people_code_id);
 
-                script_writer.WriteLine("-- table=PEOPLETYPE already done it is a leaf-node table");
+                INSERTS.Add("-- table=PEOPLETYPE already done it is a leaf-node table");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PUBLICRELATIONS]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[PUBLICRELATIONS]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[RELATIONSHIP]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[RELATIONSHIP]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[RELATIONSHIP]", people_code_id, "RELATIONSHIP.RELATION_CODE_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[RELATIONSHIP]", people_code_id, "RELATIONSHIP.RELATION_CODE_ID");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SPOUSE]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[SPOUSE]", people_code_id);
 
 
-                script_writer.WriteLine("-- table=MAILING already done it is a leaf-node table");
+                INSERTS.Add("-- table=MAILING already done it is a leaf-node table");
 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[STOPLIST]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[STOPLIST]", people_code_id);
 
 
-                script_writer.WriteLine("-- table=STUDENT already done it is a leaf-node table");
+                INSERTS.Add("-- table=STUDENT already done it is a leaf-node table");
 
 
 
-                script_writer.WriteLine("-- table=DEMOGRAPHICS ..... we found data");
-                script_writer.WriteLine("-- table=DEMOGRAPHICS trigger=DELETE investigation");
-                script_writer.WriteLine("-- table=DEMOGRAPHICS trigger=DELETE  exec sp_update_demographics_rollup just touches DEMOGRAPHICS so harmless for now");
-                script_writer.WriteLine("-- table=DEMOGRAPHICS trigger=DELETE  exec sp_u_demographics_activity just touches DEMOGRAPHICS so harmless for now");
-                script_writer.WriteLine("-- table=DEMOGRAPHICS trigger=DELETE  EXEC sp_dact_DEMOGRAPHICS does no code so harmless");
-                script_writer.WriteLine("-- table=DEMOGRAPHICS declared to be leafnode");
+                INSERTS.Add("-- table=DEMOGRAPHICS ..... we found data");
+                INSERTS.Add("-- table=DEMOGRAPHICS trigger=DELETE investigation");
+                INSERTS.Add("-- table=DEMOGRAPHICS trigger=DELETE  exec sp_update_demographics_rollup just touches DEMOGRAPHICS so harmless for now");
+                INSERTS.Add("-- table=DEMOGRAPHICS trigger=DELETE  exec sp_u_demographics_activity just touches DEMOGRAPHICS so harmless for now");
+                INSERTS.Add("-- table=DEMOGRAPHICS trigger=DELETE  EXEC sp_dact_DEMOGRAPHICS does no code so harmless");
+                INSERTS.Add("-- table=DEMOGRAPHICS declared to be leafnode");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[DEMOGRAPHICS]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[DEMOGRAPHICS]", people_code_id);
 
 
 
@@ -1441,44 +1441,44 @@ namespace MaxMistakeFixer
 
 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[DISABILITY]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[DISABILITY]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[DISABLEREQUIRE]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[DISABLEREQUIRE]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PEOPLEEMERGENCY]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[PEOPLEEMERGENCY]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ASSOCIATION]", people_code_id, "ASSOCIATION.PEOPLE_ORG_CODE_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[ASSOCIATION]", people_code_id, "ASSOCIATION.PEOPLE_ORG_CODE_ID");
 
-                script_writer.WriteLine("-- table=ADDRESS already done it is a leaf-node table");
+                INSERTS.Add("-- table=ADDRESS already done it is a leaf-node table");
 
 
-                script_writer.WriteLine("-- table=ADDRESSSCHEDULE ..... we found data declared to be leafnode because it has no delete trigger");
-                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[ADDRESSSCHEDULE] ON");
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ADDRESSSCHEDULE]", people_code_id, "ADDRESSSCHEDULE.PEOPLE_ORG_CODE_ID");
-                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[ADDRESSSCHEDULE] OFF");
+                INSERTS.Add("-- table=ADDRESSSCHEDULE ..... we found data declared to be leafnode because it has no delete trigger");
+                INSERTS.Add("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[ADDRESSSCHEDULE] ON");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[ADDRESSSCHEDULE]", people_code_id, "ADDRESSSCHEDULE.PEOPLE_ORG_CODE_ID");
+                INSERTS.Add("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[ADDRESSSCHEDULE] OFF");
 
 
-                script_writer.WriteLine("-- table=ADDRESSHIERARCHYUNIQUE ..... we found data declared to be leafnode because it has no delete trigger");
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ADDRESSHIERARCHYUNIQUE]", people_code_id, "ADDRESSHIERARCHYUNIQUE.PEOPLE_ORG_CODE_ID");
+                INSERTS.Add("-- table=ADDRESSHIERARCHYUNIQUE ..... we found data declared to be leafnode because it has no delete trigger");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[ADDRESSHIERARCHYUNIQUE]", people_code_id, "ADDRESSHIERARCHYUNIQUE.PEOPLE_ORG_CODE_ID");
 
 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ALUMNICLASS]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[ALUMNICLASS]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ALUMNICLASSSUMMARY]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[ALUMNICLASSSUMMARY]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[CASETYPE]", people_code_id, "CASETYPE.PEOPLE_ORG_CODE_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[CASETYPE]", people_code_id, "CASETYPE.PEOPLE_ORG_CODE_ID");
 
 
 
 
 
-                script_writer.WriteLine("-- table=COMBINEMAILING ..... we found data");
-                script_writer.WriteLine("-- table=COMBINEMAILING trigger=DELETE investigation");
-                script_writer.WriteLine("-- table=COMBINEMAILING EXEC SP_ADvanceName ..... ok investigated this sp previously its harmless for us");
-                script_writer.WriteLine("-- table=COMBINEMAILING declaring leafnode");
+                INSERTS.Add("-- table=COMBINEMAILING ..... we found data");
+                INSERTS.Add("-- table=COMBINEMAILING trigger=DELETE investigation");
+                INSERTS.Add("-- table=COMBINEMAILING EXEC SP_ADvanceName ..... ok investigated this sp previously its harmless for us");
+                INSERTS.Add("-- table=COMBINEMAILING declaring leafnode");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[COMBINEMAILING]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[COMBINEMAILING]", people_code_id);
 
 
 
@@ -1489,249 +1489,222 @@ namespace MaxMistakeFixer
 
 
 
-                script_writer.WriteLine("-- table=ADVANCENAME ..... we found data declared to be leafnode because it has no delete trigger");
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ADVANCENAME]", people_code_id);
+                INSERTS.Add("-- table=ADVANCENAME ..... we found data declared to be leafnode because it has no delete trigger");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[ADVANCENAME]", people_code_id);
 
 
 
 
 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ADVPEOPLEFINANCE]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[ADVPEOPLEFINANCE]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SOLICITORINFO]", people_code_id, "SOLICITORINFO.PEOPLE_ORG_CODE_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[SOLICITORINFO]", people_code_id, "SOLICITORINFO.PEOPLE_ORG_CODE_ID");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[ORGANIZATIONCONTACT]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[ORGANIZATIONCONTACT]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PROSPECTRATING]", people_code_id, "PROSPECTRATING.PEOPLE_ORG_CODE_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[PROSPECTRATING]", people_code_id, "PROSPECTRATING.PEOPLE_ORG_CODE_ID");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[AFFILIATIONS]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[AFFILIATIONS]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[INDIVIDUALMATCHING]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[INDIVIDUALMATCHING]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[INDIVIDUALMATCHING]", people_code_id, "INDIVIDUALMATCHING.ASSOCIATED_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[INDIVIDUALMATCHING]", people_code_id, "INDIVIDUALMATCHING.ASSOCIATED_ID");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TELECOMMUNICATIONS]", people_code_id, "TELECOMMUNICATIONS.PEOPLE_ORG_CODE_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[TELECOMMUNICATIONS]", people_code_id, "TELECOMMUNICATIONS.PEOPLE_ORG_CODE_ID");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[VOLUNTEERINTEREST]", people_code_id, "VOLUNTEERINTEREST.PEOPLE_ORG_CODE_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[VOLUNTEERINTEREST]", people_code_id, "VOLUNTEERINTEREST.PEOPLE_ORG_CODE_ID");
 
 
 
 
-                script_writer.WriteLine("-- table=PFINTEGRATION ..... we found data declared to be leafnode because it has no delete trigger");
-                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[PFINTEGRATION] ON");
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PFINTEGRATION]", people_code_id);
-                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[PFINTEGRATION] OFF");
+                INSERTS.Add("-- table=PFINTEGRATION ..... we found data declared to be leafnode because it has no delete trigger");
+                INSERTS.Add("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[PFINTEGRATION] ON");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[PFINTEGRATION]", people_code_id);
+                INSERTS.Add("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[PFINTEGRATION] OFF");
 
 
 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PFIPROCESSID]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[PFIPROCESSID]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[USERDEFINEDIND]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[USERDEFINEDIND]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTREQUEST]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTREQUEST]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTGRADING]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTGRADING]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[GRADEMAPPING]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[GRADEMAPPING]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[WEBREGISTRATIONID]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[WEBREGISTRATIONID]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[NSLCDETAIL]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[NSLCDETAIL]", people_code_id);
 
-                script_writer.WriteLine("-- table=TRANSCRIPTMARKETING already done it is a leaf-node table");
+                INSERTS.Add("-- table=TRANSCRIPTMARKETING already done it is a leaf-node table");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTSOURCEDISCOUNT]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[TRANSCRIPTSOURCEDISCOUNT]", people_code_id);
 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[VIOLATIONS]", people_code_id);
-                
-
-
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TranAttendance]", people_code_id);
-
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TranAttendanceSum]", people_code_id);
-
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[VIOLATIONSSUMMARY]", people_code_id);
-
-                
-
-                script_writer.WriteLine("-- NO DATA IN SPONSORSTUDENTS COULD NOT FIND ROWS AT ALL COMPLETELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
-
-
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SPONSORAGREEMENT]", people_code_id, "SPONSORAGREEMENT.PEOPLE_ORG_CODE_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[VIOLATIONS]", people_code_id);
                 
 
 
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[TranAttendance]", people_code_id);
 
-                script_writer.WriteLine("-- table=StudentAssess ..... we found data declared to be leafnode because it has no delete trigger");
-                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[StudentAssess] ON");
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[StudentAssess]", people_code_id);
-                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[StudentAssess] OFF");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[TranAttendanceSum]", people_code_id);
 
-
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[VIOLATIONSSUMMARY]", people_code_id);
 
 
 
-
-
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[MEDIARIGHTS]", people_code_id, "MEDIARIGHTS.SPECIFIC_VALUE");
-
-
-
-
-
-                script_writer.WriteLine("-- table=PeopleMetaData ..... we found data declared to be leafnode because it has no delete trigger");
-                script_writer.WriteLine("-- ************************************************* WARNING ****************************************************************************************");
-                script_writer.WriteLine("--PEOPLEMETADATA has computed values");
-                script_writer.WriteLine("--[Gender_Code_Desc],[Create_Date],[Create_Time],[Create_Opid],[Create_Terminal],[Revision_Date],[Revision_Time],[Revision_Opid],[Revision_Terminal],");
-                script_writer.WriteLine("-- **************************************************************************************************************************************************");
-
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PeopleMetaData]", people_code_id);
-
-
-
-
-
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[RATING]", people_code_id);
+                INSERTS.Add("-- NO DATA IN SPONSORSTUDENTS COULD NOT FIND ROWS AT ALL COMPLETELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB");
                 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[WAITLIST]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[INTERESTLEVELS]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[SPONSORAGREEMENT]", people_code_id, "SPONSORAGREEMENT.PEOPLE_ORG_CODE_ID");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[INTERESTLEVELSHISTORY]", people_code_id);
 
-                script_writer.WriteLine("-- table=transcompgroup ..... delete trigger says touches transcompgroupevent and transcompetency");
-                script_writer.WriteLine("-- table=transcompgroup ..... transcompgroupevent is a leafnode it has no delete trigger");
-                script_writer.WriteLine("-- table=transcompgroup ..... transcompetency touches transcomptasks, TRANSCOMPSIGN, TransCompNotes, transcompcatnotes ..... if resultrows after query on transcompgroup we are gonna throw exception for now so you can look at those delete triggers");
-                int transcompgroup_results_count = DoQuery(ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcompgroup]", people_code_id);
+
+
+                INSERTS.Add("-- table=StudentAssess ..... we found data declared to be leafnode because it has no delete trigger");
+                INSERTS.Add("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[StudentAssess] ON");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[StudentAssess]", people_code_id);
+                INSERTS.Add("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[StudentAssess] OFF");
+
+
+
+
+
+
+
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[MEDIARIGHTS]", people_code_id, "MEDIARIGHTS.SPECIFIC_VALUE");
+
+
+
+
+
+                INSERTS.Add("-- table=PeopleMetaData ..... we found data declared to be leafnode because it has no delete trigger");
+                INSERTS.Add("-- ************************************************* WARNING ****************************************************************************************");
+                INSERTS.Add("--PEOPLEMETADATA has computed values");
+                INSERTS.Add("--[Gender_Code_Desc],[Create_Date],[Create_Time],[Create_Opid],[Create_Terminal],[Revision_Date],[Revision_Time],[Revision_Opid],[Revision_Terminal],");
+                INSERTS.Add("-- **************************************************************************************************************************************************");
+
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[PeopleMetaData]", people_code_id);
+
+
+
+
+
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[RATING]", people_code_id);
+                
+
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[WAITLIST]", people_code_id);
+
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[INTERESTLEVELS]", people_code_id);
+
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[INTERESTLEVELSHISTORY]", people_code_id);
+
+                INSERTS.Add("-- table=transcompgroup ..... delete trigger says touches transcompgroupevent and transcompetency");
+                INSERTS.Add("-- table=transcompgroup ..... transcompgroupevent is a leafnode it has no delete trigger");
+                INSERTS.Add("-- table=transcompgroup ..... transcompetency touches transcomptasks, TRANSCOMPSIGN, TransCompNotes, transcompcatnotes ..... if resultrows after query on transcompgroup we are gonna throw exception for now so you can look at those delete triggers");
+                int transcompgroup_results_count = DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[transcompgroup]", people_code_id);
                 if (transcompgroup_results_count > 0)
                 {
                     throw new Exception("NEED TO INVESTIGATE ALL DELETE TRIGGERS BELOW transcompgroup did not do that yet!!!!!");
                 }
 
-                script_writer.WriteLine("-- table=transcompgroupevent ..... we found data declared to be leafnode because it has no delete trigger");
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcompgroupevent]", people_code_id);
+                INSERTS.Add("-- table=transcompgroupevent ..... we found data declared to be leafnode because it has no delete trigger");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[transcompgroupevent]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcompetency]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[transcompetency]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcompsign]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[transcompsign]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcomptasksign]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[transcomptasksign]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[transcompcatnotes]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[transcompcatnotes]", people_code_id);
                 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[COMPARISONRESULTS]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[COMPARISONRESULTS]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[COMPARISONRESULTS]", people_code_id, "COMPARISONRESULTS.PEOPLE_CODE_ID2");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[COMPARISONRESULTS]", people_code_id, "COMPARISONRESULTS.PEOPLE_CODE_ID2");
 
-                DoSpecialQuery_Custom(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[REGISTRATIONPERMISSION]", "REGISTRATIONPERMISSION.STUDENT_ID", list_people_id[ii]);
+                DoSpecialQuery_Custom(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[REGISTRATIONPERMISSION]", "REGISTRATIONPERMISSION.STUDENT_ID", list_people_id[ii]);
 
-                DoSpecialQuery_Custom(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[REGISTRATIONPERMISSION]", "REGISTRATIONPERMISSION.PERMISSION_ID", list_people_id[ii]);
-
-
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[COUNSELOREXCEPTIONS]", people_code_id, "COUNSELOREXCEPTIONS.COUNSELOR_CODE_ID");
-
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[EPSCOUNSELORLINK]", people_code_id, "EPSCOUNSELORLINK.COUNSELOR_CODE_ID");
+                DoSpecialQuery_Custom(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[REGISTRATIONPERMISSION]", "REGISTRATIONPERMISSION.PERMISSION_ID", list_people_id[ii]);
 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[EPSACADEMIC]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[COUNSELOREXCEPTIONS]", people_code_id, "COUNSELOREXCEPTIONS.COUNSELOR_CODE_ID");
 
-                DoSpecialQuery_Custom(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SPONSORSTUDENTWAIVER]", "SPONSORSTUDENTWAIVER.PEOPLE_ID", list_people_id[ii]);
-
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SPONSORSTUDENTWAIVER]", people_code_id, "SPONSORSTUDENTWAIVER.PEOPLE_ORG_CODE_ID");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[EPSCOUNSELORLINK]", people_code_id, "EPSCOUNSELORLINK.COUNSELOR_CODE_ID");
 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[SPONSORCHANGES]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[EPSACADEMIC]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[TRANSACTIONS]", people_code_id);
+                DoSpecialQuery_Custom(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[SPONSORSTUDENTWAIVER]", "SPONSORSTUDENTWAIVER.PEOPLE_ID", list_people_id[ii]);
+
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[SPONSORSTUDENTWAIVER]", people_code_id, "SPONSORSTUDENTWAIVER.PEOPLE_ORG_CODE_ID");
+
+
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[SPONSORCHANGES]", people_code_id);
+
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[TRANSACTIONS]", people_code_id);
                 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PEOPLESCHOLARSHIP]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[PEOPLESCHOLARSHIP]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PEOPLESCHOLARSHIPREQS]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[PEOPLESCHOLARSHIPREQS]", people_code_id);
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PEOPLESCHOLARSHIPNOTES]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[PEOPLESCHOLARSHIPNOTES]", people_code_id);
 
-                script_writer.WriteLine("-- table=FULLPARTHISTORY already done it is a leaf-node table");
+                INSERTS.Add("-- table=FULLPARTHISTORY already done it is a leaf-node table");
 
-                script_writer.WriteLine("-- NO DATA IN StudentProxy COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                INSERTS.Add("-- NO DATA IN StudentProxy COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
 
-                script_writer.WriteLine("-- NO DATA IN StudentProxyRequest COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                INSERTS.Add("-- NO DATA IN StudentProxyRequest COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
 
-                script_writer.WriteLine("-- NO DATA IN StudentProxyHistory COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                INSERTS.Add("-- NO DATA IN StudentProxyHistory COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
 
-                script_writer.WriteLine("-- NO DATA IN AddressApprovalRequest COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                INSERTS.Add("-- NO DATA IN AddressApprovalRequest COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
 
-                script_writer.WriteLine("-- NO DATA IN Application COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                INSERTS.Add("-- NO DATA IN Application COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
 
-                script_writer.WriteLine("-- NO DATA IN Inquiry COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                INSERTS.Add("-- NO DATA IN Inquiry COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[Reported1098TInformation]", people_code_id);
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[Reported1098TInformation]", people_code_id);
 
-                script_writer.WriteLine("-- NO DATA IN BlockWebRegGroups COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                INSERTS.Add("-- NO DATA IN BlockWebRegGroups COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
 
-                script_writer.WriteLine("-- NO DATA IN BlockWebRegGroupSections COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                INSERTS.Add("-- NO DATA IN BlockWebRegGroupSections COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
 
-                script_writer.WriteLine("-- NO DATA IN BlockWebRegRules COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                INSERTS.Add("-- NO DATA IN BlockWebRegRules COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
 
-                script_writer.WriteLine("-- NO DATA IN BlockWebRegRuleGroups COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                INSERTS.Add("-- NO DATA IN BlockWebRegRuleGroups COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
 
-                script_writer.WriteLine("-- NO DATA IN BlockWebRegisteredPeople COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                INSERTS.Add("-- NO DATA IN BlockWebRegisteredPeople COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[InvoiceHeader]", people_code_id, "InvoiceHeader.People_Org_Code_Id");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[InvoiceHeader]", people_code_id, "InvoiceHeader.People_Org_Code_Id");
 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[InvoicePreferredTaxpayer]", people_code_id, "InvoicePreferredTaxpayer.PeopleOrgCodeId");
-                
-
-                script_writer.WriteLine("-- NO DATA IN SharedAdvisee COULD NOT FIND ROWS");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
-
-                script_writer.WriteLine("-- NO DATA IN SharedAdviseeHistory COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
-
-                script_writer.WriteLine("-- NO DATA IN AssignmentTemplateShare COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
-                script_writer.WriteLine();
-                script_writer.WriteLine();
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[InvoicePreferredTaxpayer]", people_code_id, "InvoicePreferredTaxpayer.PeopleOrgCodeId");
 
 
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[DeletedChargeCredit]", people_code_id, "DeletedChargeCredit.PeopleOrgCodeId");
+                INSERTS.Add("-- NO DATA IN SharedAdvisee COULD NOT FIND ROWS");
 
 
-                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[PEOPLE] ON");
-                DoQuery(ref QUERYS, ref INSERTS, ref script_writer, ref conn, "[Campus8_ceeb].[dbo].[PEOPLE]", people_code_id);
-                script_writer.WriteLine("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[PEOPLE] OFF");
+                INSERTS.Add("-- NO DATA IN SharedAdviseeHistory COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+
+
+                INSERTS.Add("-- NO DATA IN AssignmentTemplateShare COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+
+
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[DeletedChargeCredit]", people_code_id, "DeletedChargeCredit.PeopleOrgCodeId");
+
+
+                INSERTS.Add("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[PEOPLE] ON");
+                DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[PEOPLE]", people_code_id);
+                INSERTS.Add("SET IDENTITY_INSERT [Campus8_ceeb].[dbo].[PEOPLE] OFF");
 
 
             }
