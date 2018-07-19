@@ -272,6 +272,8 @@ namespace MaxMistakeFixer
             if (resultcount == 0)
                 INSERTS.Add(string.Format("-- NO INSERT INTO {0}", table_name));
 
+            INSERTS.Add("");
+
             return resultcount;
         }
 
@@ -521,6 +523,8 @@ namespace MaxMistakeFixer
 
             if (resultcount == 0)
                 INSERTS.Add(string.Format("-- NO INSERT INTO {0}", table_name));
+
+            INSERTS.Add("");
 
             return resultcount;
         }
@@ -796,6 +800,8 @@ namespace MaxMistakeFixer
                 INSERTS.Add(string.Format("INSERT INTO [Campus8_ceeb].[dbo].[CHARGECREDITDIST] {0} VALUES {1}", column_names, column_values));
             }
             dr.Close();
+
+            INSERTS.Add("");
         }
 
 
