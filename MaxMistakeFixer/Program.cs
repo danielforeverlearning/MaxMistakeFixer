@@ -55,9 +55,9 @@ namespace MaxMistakeFixer
 
         static int DoQuery(ref List<string>QUERYS, ref List<string>INSERTS, ref SqlConnection conn, string table_name, string people_code_id, string optionalcolumncheck = null)
         {
-            string querystr = string.Format("SELECT * FROM {0} WHERE PEOPLE_CODE_ID='{1}'", table_name, people_code_id);
+            string querystr = string.Format("SELECT * FROM {0} WHERE PEOPLE_CODE_ID='{1}';", table_name, people_code_id);
             if (optionalcolumncheck != null)
-                querystr = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", table_name, optionalcolumncheck, people_code_id);
+                querystr = string.Format("SELECT * FROM {0} WHERE {1}='{2}';", table_name, optionalcolumncheck, people_code_id);
 
             QUERYS.Add(querystr);
             INSERTS.Add("-- " + querystr);
@@ -118,7 +118,7 @@ namespace MaxMistakeFixer
                         try
                         {
                             mydatetime = dr.GetDateTime(ii);
-                            customstr = mydatetime.ToString("yyyy-MM-dd HH:mm:ss.000");
+                            customstr = mydatetime.ToString("yyyy-MM-dd HH:mm:ss.fff");
                         }
                         catch (SqlNullValueException ex)
                         {
@@ -265,7 +265,7 @@ namespace MaxMistakeFixer
                         INSERTS.Add(string.Format("-- ************ WARNING DoQuery **************** mytype={0}", mytype.ToString()));
                     }
                 }
-                INSERTS.Add(string.Format("INSERT INTO {0} {1} VALUES {2}", table_name, column_names, column_values));
+                INSERTS.Add(string.Format("INSERT INTO {0} {1} VALUES {2};", table_name, column_names, column_values));
             }
             dr.Close();
 
@@ -280,7 +280,7 @@ namespace MaxMistakeFixer
 
         static int DoSpecialQuery_Custom(ref List<string> QUERYS, ref List<string> INSERTS, ref SqlConnection conn, string table_name, string mandatorycolumncheck, string id_str)
         {
-            string querystr = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", table_name, mandatorycolumncheck, id_str);
+            string querystr = string.Format("SELECT * FROM {0} WHERE {1}='{2}';", table_name, mandatorycolumncheck, id_str);
 
             QUERYS.Add(querystr);
             INSERTS.Add("-- " + querystr);
@@ -341,7 +341,7 @@ namespace MaxMistakeFixer
                         try
                         {
                             mydatetime = dr.GetDateTime(ii);
-                            customstr = mydatetime.ToString("yyyy-MM-dd HH:mm:ss.000");
+                            customstr = mydatetime.ToString("yyyy-MM-dd HH:mm:ss.fff");
                         }
                         catch (SqlNullValueException ex)
                         {
@@ -517,7 +517,7 @@ namespace MaxMistakeFixer
                         INSERTS.Add(string.Format("-- **************** WARNING DoSpecialQuery_Custom ************ mytype={0}", mytype.ToString()));
                     }
                 }
-                INSERTS.Add(string.Format("INSERT INTO {0} {1} VALUES {2}", table_name, column_names, column_values));
+                INSERTS.Add(string.Format("INSERT INTO {0} {1} VALUES {2};", table_name, column_names, column_values));
             }
             dr.Close();
 
@@ -533,9 +533,9 @@ namespace MaxMistakeFixer
 
         static List<string> DoSpecialQuery_CHARGECREDIT_GET_CHARGECREDITNUMBER(ref List<string> QUERYS, ref List<string> INSERTS, ref SqlConnection conn, string table_name, string people_code_id, string optionalcolumncheck = null)
         {
-            string querystr = string.Format("SELECT CHARGECREDITNUMBER FROM {0} WHERE PEOPLE_CODE_ID='{1}'", table_name, people_code_id);
+            string querystr = string.Format("SELECT CHARGECREDITNUMBER FROM {0} WHERE PEOPLE_CODE_ID='{1}';", table_name, people_code_id);
             if (optionalcolumncheck != null)
-                querystr = string.Format("SELECT CHARGECREDITNUMBER FROM {0} WHERE {1}='{2}'", table_name, optionalcolumncheck, people_code_id);
+                querystr = string.Format("SELECT CHARGECREDITNUMBER FROM {0} WHERE {1}='{2}';", table_name, optionalcolumncheck, people_code_id);
 
             QUERYS.Add(querystr);
             INSERTS.Add("-- " + querystr);
@@ -591,7 +591,7 @@ namespace MaxMistakeFixer
                     bigchargestr += " OR ";
             }
 
-            string querystr = string.Format("select * FROM [Campus8_ceeb].[dbo].[CHARGECREDITDIST] WHERE {0}", bigchargestr);
+            string querystr = string.Format("SELECT * FROM [Campus8_ceeb].[dbo].[CHARGECREDITDIST] WHERE {0};", bigchargestr);
 
             QUERYS.Add(querystr);
             INSERTS.Add("-- " + querystr);
@@ -650,7 +650,7 @@ namespace MaxMistakeFixer
                         try
                         {
                             mydatetime = dr.GetDateTime(ii);
-                            customstr = mydatetime.ToString("yyyy-MM-dd HH:mm:ss.000");
+                            customstr = mydatetime.ToString("yyyy-MM-dd HH:mm:ss.fff");
                         }
                         catch (SqlNullValueException ex)
                         {
@@ -797,7 +797,7 @@ namespace MaxMistakeFixer
                         INSERTS.Add(string.Format("-- ****************** WARNING DoSpecialChargeCreditDistQuery ************** mytype={0}", mytype.ToString()));
                     }
                 }
-                INSERTS.Add(string.Format("INSERT INTO [Campus8_ceeb].[dbo].[CHARGECREDITDIST] {0} VALUES {1}", column_names, column_values));
+                INSERTS.Add(string.Format("INSERT INTO [Campus8_ceeb].[dbo].[CHARGECREDITDIST] {0} VALUES {1};", column_names, column_values));
             }
             dr.Close();
 
@@ -824,17 +824,23 @@ namespace MaxMistakeFixer
             //****************************************************
             //These are the 2 needing repair
             //****************************************************
-            //listpeoplecodeid.Add("P000074179");
-            //list_people_id.Add("000074179");
-            //list_person_id.Add("69700");
+            listpeoplecodeid.Add("P000074179");
+            list_people_id.Add("000074179");
+            list_person_id.Add("69700");
 
-            //listpeoplecodeid.Add("P000074226");
-            //list_people_id.Add("000074226");
-            //list_person_id.Add("69747");
+            listpeoplecodeid.Add("P000074226");
+            list_people_id.Add("000074226");
+            list_person_id.Add("69747");
 
-            listpeoplecodeid.Add("P000070450");
-            list_people_id.Add("000070450");
-            list_person_id.Add("65954");
+
+
+
+            string filename = string.Format(@".\FixMaxMistake.sql");
+            StreamWriter script_writer = new StreamWriter(filename);
+
+            script_writer.WriteLine("USE [Campus8];");
+            script_writer.WriteLine("BEGIN TRANSACTION FixMaxMistake;");
+
 
 
             for (int ii=0; ii < listpeoplecodeid.Count; ii++)
@@ -842,108 +848,105 @@ namespace MaxMistakeFixer
                 QUERYS.Clear();
                 INSERTS.Clear();
 
-                string filename = string.Format(@".\FixMaxMistake_Person_{0}.sql", ii);
-                StreamWriter script_writer = new StreamWriter(filename);
+                
 
-                string transactionname = string.Format("FixMaxMistake_Person_{0}", ii);
-                script_writer.WriteLine(string.Format("BEGIN TRANSACTION {0};", transactionname));
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_people] ON [Campus8_ceeb].[dbo].[PEOPLE];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_people] ON [Campus8_ceeb].[dbo].[PEOPLE];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_people] ON [Campus8_ceeb].[dbo].[PEOPLE];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tu_people] ON [Campus8_ceeb].[dbo].[PEOPLE];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_studentfinancial] ON [Campus8_ceeb].[dbo].[STUDENTFINANCIAL];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_studentfinancial] ON [Campus8_ceeb].[dbo].[STUDENTFINANCIAL];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_studentfinancial] ON [Campus8_ceeb].[dbo].[STUDENTFINANCIAL];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tu_studentfinancial] ON [Campus8_ceeb].[dbo].[STUDENTFINANCIAL];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiStudent] ON [Campus8_ceeb].[dbo].[STUDENT];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuStudent] ON [Campus8_ceeb].[dbo].[STUDENT];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tiStudent] ON [Campus8_ceeb].[dbo].[STUDENT];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tuStudent] ON [Campus8_ceeb].[dbo].[STUDENT];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiMailing] ON [Campus8_ceeb].[dbo].[MAILING];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuMailing] ON [Campus8_ceeb].[dbo].[MAILING];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tiMailing] ON [Campus8_ceeb].[dbo].[MAILING];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tuMailing] ON [Campus8_ceeb].[dbo].[MAILING];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiAddress] ON [Campus8_ceeb].[dbo].[ADDRESS];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuAddress] ON [Campus8_ceeb].[dbo].[ADDRESS];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tiAddress] ON [Campus8_ceeb].[dbo].[ADDRESS];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tuAddress] ON [Campus8_ceeb].[dbo].[ADDRESS];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiPeopleType] ON [Campus8_ceeb].[dbo].[PEOPLETYPE];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuPeopleType] ON [Campus8_ceeb].[dbo].[PEOPLETYPE];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tiPeopleType] ON [Campus8_ceeb].[dbo].[PEOPLETYPE];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tuPeopleType] ON [Campus8_ceeb].[dbo].[PEOPLETYPE];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiSourceDetail] ON [Campus8_ceeb].[dbo].[SOURCEDETAIL];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuSourceDetail] ON [Campus8_ceeb].[dbo].[SOURCEDETAIL];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tiSourceDetail] ON [Campus8_ceeb].[dbo].[SOURCEDETAIL];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tuSourceDetail] ON [Campus8_ceeb].[dbo].[SOURCEDETAIL];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiouStageHistory] ON [Campus8_ceeb].[dbo].[STAGEHISTORY];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tiouStageHistory] ON [Campus8_ceeb].[dbo].[STAGEHISTORY];");
 
-                script_writer.WriteLine("-- FULLPARTHISTORY NO TRIGGERS");
+                INSERTS.Add("-- FULLPARTHISTORY NO TRIGGERS");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_education] ON [Campus8_ceeb].[dbo].[EDUCATION];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_education] ON [Campus8_ceeb].[dbo].[EDUCATION];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_education] ON [Campus8_ceeb].[dbo].[EDUCATION];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tu_education] ON [Campus8_ceeb].[dbo].[EDUCATION];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_academic] ON [Campus8_ceeb].[dbo].[ACADEMIC];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_academic] ON [Campus8_ceeb].[dbo].[ACADEMIC];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_acadkey_change] ON [Campus8_ceeb].[dbo].[ACADEMIC];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_academic] ON [Campus8_ceeb].[dbo].[ACADEMIC];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tu_academic] ON [Campus8_ceeb].[dbo].[ACADEMIC];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tu_acadkey_change] ON [Campus8_ceeb].[dbo].[ACADEMIC];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_transcriptdetail] ON [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_transcriptdetail] ON [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[web3_tu_drop_notif] ON [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[web3_tu_transcriptdetail] ON [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_transcriptdetail] ON [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tu_transcriptdetail] ON [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[web3_tu_drop_notif] ON [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[web3_tu_transcriptdetail] ON [Campus8_ceeb].[dbo].[TRANSCRIPTDETAIL];");
 
-                script_writer.WriteLine("-- TRANSEDUCATION NO TRIGGERS");
+                INSERTS.Add("-- TRANSEDUCATION NO TRIGGERS");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tI_TranscriptMarketing] ON [Campus8_ceeb].[dbo].[TRANSCRIPTMARKETING];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tU_TranscriptMarketing] ON [Campus8_ceeb].[dbo].[TRANSCRIPTMARKETING];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tI_TranscriptMarketing] ON [Campus8_ceeb].[dbo].[TRANSCRIPTMARKETING];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tU_TranscriptMarketing] ON [Campus8_ceeb].[dbo].[TRANSCRIPTMARKETING];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_transcriptheader] ON [Campus8_ceeb].[dbo].[TRANSCRIPTHEADER];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_transcriptheader] ON [Campus8_ceeb].[dbo].[TRANSCRIPTHEADER];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_transcriptgpa] ON [Campus8_ceeb].[dbo].[TRANSCRIPTGPA];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_transcriptgpa] ON [Campus8_ceeb].[dbo].[TRANSCRIPTGPA];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_transcriptgpa] ON [Campus8_ceeb].[dbo].[TRANSCRIPTGPA];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tu_transcriptgpa] ON [Campus8_ceeb].[dbo].[TRANSCRIPTGPA];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_transcriptcomment] ON [Campus8_ceeb].[dbo].[TRANSCRIPTCOMMENT];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_transcriptcomment] ON [Campus8_ceeb].[dbo].[TRANSCRIPTCOMMENT];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiTranscriptAward] ON [Campus8_ceeb].[dbo].[TRANSCRIPTAWARD];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuTranscriptAward] ON [Campus8_ceeb].[dbo].[TRANSCRIPTAWARD];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tiTranscriptAward] ON [Campus8_ceeb].[dbo].[TRANSCRIPTAWARD];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tuTranscriptAward] ON [Campus8_ceeb].[dbo].[TRANSCRIPTAWARD];");
 
-                script_writer.WriteLine("-- TRANSCRIPTHONORS NO TRIGGERS");
+                INSERTS.Add("-- TRANSCRIPTHONORS NO TRIGGERS");
 
-                script_writer.WriteLine("-- TRANSCRIPTDEGREE NO TRIGGERS");
+                INSERTS.Add("-- TRANSCRIPTDEGREE NO TRIGGERS");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_academicinterest] ON [Campus8_ceeb].[dbo].[ACADEMICINTEREST];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_academicinterest] ON [Campus8_ceeb].[dbo].[ACADEMICINTEREST];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_academicinterest] ON [Campus8_ceeb].[dbo].[ACADEMICINTEREST];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tu_academicinterest] ON [Campus8_ceeb].[dbo].[ACADEMICINTEREST];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_testscores] ON [Campus8_ceeb].[dbo].[TESTSCORES];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_testscores] ON [Campus8_ceeb].[dbo].[TESTSCORES];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_testscores] ON [Campus8_ceeb].[dbo].[TESTSCORES];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tu_testscores] ON [Campus8_ceeb].[dbo].[TESTSCORES];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_residency] ON [Campus8_ceeb].[dbo].[RESIDENCY];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_residency] ON [Campus8_ceeb].[dbo].[RESIDENCY];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_residency] ON [Campus8_ceeb].[dbo].[RESIDENCY];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tu_residency] ON [Campus8_ceeb].[dbo].[RESIDENCY];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_chargecreditdist] ON [Campus8_ceeb].[dbo].[CHARGECREDITDIST];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_chargecreditdist] ON [Campus8_ceeb].[dbo].[CHARGECREDITDIST];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_chargecreditdist] ON [Campus8_ceeb].[dbo].[CHARGECREDITDIST];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tu_chargecreditdist] ON [Campus8_ceeb].[dbo].[CHARGECREDITDIST];");
 
-                script_writer.WriteLine("-- PEOPLEORGBALANCE NO TRIGGERS");
+                INSERTS.Add("-- PEOPLEORGBALANCE NO TRIGGERS");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiChargeCredit] ON [Campus8_ceeb].[dbo].[CHARGECREDIT];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuChargeCredit] ON [Campus8_ceeb].[dbo].[CHARGECREDIT];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tiChargeCredit] ON [Campus8_ceeb].[dbo].[CHARGECREDIT];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tuChargeCredit] ON [Campus8_ceeb].[dbo].[CHARGECREDIT];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_actionschedule] ON [Campus8_ceeb].[dbo].[ACTIONSCHEDULE];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_actionschedule] ON [Campus8_ceeb].[dbo].[ACTIONSCHEDULE];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_actionschedule] ON [Campus8_ceeb].[dbo].[ACTIONSCHEDULE];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tu_actionschedule] ON [Campus8_ceeb].[dbo].[ACTIONSCHEDULE];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_demographics] ON [Campus8_ceeb].[dbo].[DEMOGRAPHICS];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_demographics] ON [Campus8_ceeb].[dbo].[DEMOGRAPHICS];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_demographics] ON [Campus8_ceeb].[dbo].[DEMOGRAPHICS];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tu_demographics] ON [Campus8_ceeb].[dbo].[DEMOGRAPHICS];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tiAddressSchedule] ON [Campus8_ceeb].[dbo].[ADDRESSSCHEDULE];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuAddressSchedule] ON [Campus8_ceeb].[dbo].[ADDRESSSCHEDULE];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tiAddressSchedule] ON [Campus8_ceeb].[dbo].[ADDRESSSCHEDULE];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tuAddressSchedule] ON [Campus8_ceeb].[dbo].[ADDRESSSCHEDULE];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tuAddressHierarchyUnique] ON [Campus8_ceeb].[dbo].[ADDRESSHIERARCHYUNIQUE];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tuAddressHierarchyUnique] ON [Campus8_ceeb].[dbo].[ADDRESSHIERARCHYUNIQUE];");
 
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[ti_combinemailing] ON [Campus8_ceeb].[dbo].[COMBINEMAILING];");
-                script_writer.WriteLine("DISABLE TRIGGER[dbo].[tu_combinemailing] ON [Campus8_ceeb].[dbo].[COMBINEMAILING];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[ti_combinemailing] ON [Campus8_ceeb].[dbo].[COMBINEMAILING];");
+                INSERTS.Add("DISABLE TRIGGER[dbo].[tu_combinemailing] ON [Campus8_ceeb].[dbo].[COMBINEMAILING];");
 
-                script_writer.WriteLine("-- ADVANCENAME NO TRIGGERS");
+                INSERTS.Add("-- ADVANCENAME NO TRIGGERS");
 
-                script_writer.WriteLine("-- PFINTEGRATION NO TRIGGERS");
+                INSERTS.Add("-- PFINTEGRATION NO TRIGGERS");
 
-                script_writer.WriteLine("-- STUDENTASSESS NO TRIGGERS");
+                INSERTS.Add("-- STUDENTASSESS NO TRIGGERS");
 
-                script_writer.WriteLine("-- PEOPLEMETADATA NO TRIGGERS");
+                INSERTS.Add("-- PEOPLEMETADATA NO TRIGGERS");
 
-                script_writer.WriteLine("-- USERDEFINEDIND NO TRIGGERS");
+                INSERTS.Add("-- USERDEFINEDIND NO TRIGGERS");
 
 
 
@@ -1675,29 +1678,29 @@ namespace MaxMistakeFixer
 
                 INSERTS.Add("-- table=FULLPARTHISTORY already done it is a leaf-node table");
 
-                INSERTS.Add("-- NO DATA IN StudentProxy COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+                INSERTS.Add("-- NO DATA IN StudentProxy COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE!!!!!");
 
-                INSERTS.Add("-- NO DATA IN StudentProxyRequest COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+                INSERTS.Add("-- NO DATA IN StudentProxyRequest COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE!!!!!");
 
-                INSERTS.Add("-- NO DATA IN StudentProxyHistory COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+                INSERTS.Add("-- NO DATA IN StudentProxyHistory COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE!!!!!");
 
-                INSERTS.Add("-- NO DATA IN AddressApprovalRequest COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+                INSERTS.Add("-- NO DATA IN AddressApprovalRequest COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE!!!!!");
 
-                INSERTS.Add("-- NO DATA IN Application COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+                INSERTS.Add("-- NO DATA IN Application COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE!!!!!");
 
-                INSERTS.Add("-- NO DATA IN Inquiry COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+                INSERTS.Add("-- NO DATA IN Inquiry COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE!!!!!");
 
                 DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[Reported1098TInformation]", people_code_id);
 
-                INSERTS.Add("-- NO DATA IN BlockWebRegGroups COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+                INSERTS.Add("-- NO DATA IN BlockWebRegGroups COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE!!!!!");
 
-                INSERTS.Add("-- NO DATA IN BlockWebRegGroupSections COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+                INSERTS.Add("-- NO DATA IN BlockWebRegGroupSections COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE!!!!!");
 
-                INSERTS.Add("-- NO DATA IN BlockWebRegRules COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+                INSERTS.Add("-- NO DATA IN BlockWebRegRules COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE!!!!!");
 
-                INSERTS.Add("-- NO DATA IN BlockWebRegRuleGroups COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+                INSERTS.Add("-- NO DATA IN BlockWebRegRuleGroups COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE!!!!!");
 
-                INSERTS.Add("-- NO DATA IN BlockWebRegisteredPeople COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+                INSERTS.Add("-- NO DATA IN BlockWebRegisteredPeople COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE!!!!!");
 
 
                 DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[InvoiceHeader]", people_code_id, "InvoiceHeader.People_Org_Code_Id");
@@ -1709,10 +1712,10 @@ namespace MaxMistakeFixer
                 INSERTS.Add("-- NO DATA IN SharedAdvisee COULD NOT FIND ROWS");
 
 
-                INSERTS.Add("-- NO DATA IN SharedAdviseeHistory COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+                INSERTS.Add("-- NO DATA IN SharedAdviseeHistory COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE!!!!!");
 
 
-                INSERTS.Add("-- NO DATA IN AssignmentTemplateShare COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE IN CAMPUS8 AND CAMPUS8_CEEB!!!!!");
+                INSERTS.Add("-- NO DATA IN AssignmentTemplateShare COULD NOT FIND ROWS ABSOLUTELY EMPTY TABLE!!!!!");
 
 
                 DoQuery(ref QUERYS, ref INSERTS, ref conn, "[Campus8_ceeb].[dbo].[DeletedChargeCredit]", people_code_id, "DeletedChargeCredit.PeopleOrgCodeId");
@@ -1730,13 +1733,13 @@ namespace MaxMistakeFixer
                 //**********************************************************
 
                 //*****************************************
-                //(3) BEFORE DELETE QUERYS
+                //(3) BEFORE INSERT QUERYS
                 //*****************************************
                 script_writer.WriteLine("");
                 script_writer.WriteLine("");
-                script_writer.WriteLine("-- **************************************************");
-                script_writer.WriteLine("-- BEFORE DELETE QUERYS");
-                script_writer.WriteLine("-- **************************************************");
+                script_writer.WriteLine("SELECT '**************************************************';");
+                script_writer.WriteLine("SELECT 'BEFORE INSERT QUERYS';");
+                script_writer.WriteLine("SELECT '**************************************************';");
 
                 for (int xx=0; xx < QUERYS.Count; xx++)
                     script_writer.WriteLine(QUERYS[xx]);
@@ -1745,23 +1748,25 @@ namespace MaxMistakeFixer
                 //*****************************************
                 //(4) DELETE COMMAND
                 //*****************************************
+                /*********************************
                 script_writer.WriteLine("");
                 script_writer.WriteLine("");
                 script_writer.WriteLine(string.Format("DELETE [Campus8_ceeb].[dbo].[PEOPLE] WHERE PEOPLE_CODE_ID = '{0}';", people_code_id));
-
+                ************************/
 
                 //*****************************************
                 //(5) AFTER DELETE QUERYS
                 //*****************************************
+                /*****************************
                 script_writer.WriteLine("");
                 script_writer.WriteLine("");
-                script_writer.WriteLine("-- **************************************************");
-                script_writer.WriteLine("-- AFTER DELETE QUERYS");
-                script_writer.WriteLine("-- **************************************************");
+                script_writer.WriteLine("SELECT '**************************************************';");
+                script_writer.WriteLine("SELECT 'AFTER DELETE QUERYS';");
+                script_writer.WriteLine("SELECT '**************************************************';");
 
                 for (int xx = 0; xx < QUERYS.Count; xx++)
                     script_writer.WriteLine(QUERYS[xx]);
-
+                *******************************/
 
                 //*****************************************
                 //(6) INSERT COMMANDS
@@ -1777,23 +1782,22 @@ namespace MaxMistakeFixer
 
 
                 //*****************************************
-                //(7) AFTER INSERT COMMANDS QUERYS
+                //(7) AFTER INSERT QUERYS
                 //*****************************************
                 script_writer.WriteLine("");
                 script_writer.WriteLine("");
-                script_writer.WriteLine("-- **************************************************");
-                script_writer.WriteLine("-- AFTER INSERT COMMANDS QUERYS");
-                script_writer.WriteLine("-- **************************************************");
+                script_writer.WriteLine("SELECT '**************************************************';");
+                script_writer.WriteLine("SELECT 'AFTER INSERT QUERYS';");
+                script_writer.WriteLine("SELECT '**************************************************';");
 
                 for (int xx = 0; xx < QUERYS.Count; xx++)
                     script_writer.WriteLine(QUERYS[xx]);
-
-                //*****************************************
-                //DONE
-                //*****************************************
-                script_writer.Close();
-
             }
+
+            //*****************************************
+            //DONE
+            //*****************************************
+            script_writer.Close();
 
             conn.Close();
 
